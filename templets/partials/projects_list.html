@@ -1,0 +1,9 @@
+{% for p in projects %}
+<a class="project reveal" href="/contact">
+  <div class="project-img variant-{{ p.variant }}" role="img" aria-label="{{ p.name }} preview"></div>
+  <div class="project-meta">
+    <div><h3>{{ p.name }}</h3><p class="muted">{{ p.tags }} · {{ p.year }}</p></div>
+    <span class="project-num">{{ "%02d"|format(loop.index) }} <span class="arrow">→</span></span>
+  </div>
+</a>
+{% endfor %}

@@ -1,0 +1,15 @@
+{% set nav = [("About", "/about"), ("Services", "/services"), ("Projects", "/projects"), ("Careers", "/careers"), ("Contact", "/contact")] %}
+<header class="site-header">
+  <div class="container nav">
+    <a class="logo" href="/" aria-label="{{ company.name }} home"><span>◆</span>{{ company.name }}</a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav-links" id="nav-links" aria-label="Main">
+      {% for label, path in nav %}
+      <a class="nav-link{{ ' is-active' if request.path.startswith(path) }}" href="{{ path }}">{{ label }}</a>
+      {% endfor %}
+      <a class="btn btn-sm" href="/contact">Let's talk</a>
+    </nav>
+  </div>
+</header>
