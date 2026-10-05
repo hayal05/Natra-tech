@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Projects — {{ company.name }}{% endblock %}
+{% block description %}A selection of software, AI and cloud projects we have delivered.{% endblock %}
+{% block content %}
+<section class="section page-top">
+  <div class="container">
+    <span class="label">Portfolio</span>
+    <h1>Our <span class="accent">work.</span></h1>
+    <div class="projects">{% include "partials/projects_list.html" %}</div>
+  </div>
+</section>
+{% include "partials/cta.html" %}
+{% endblock %}

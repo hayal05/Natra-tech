@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{ job.title }} — Careers — {{ company.name }}{% endblock %}
+{% block description %}{{ (job.description or 'Join ' ~ company.name ~ '.')|truncate(150) }}{% endblock %}
+{% block head_extra %}<script type="application/ld+json">{{ ld|tojson }}</script>{% endblock %}
+{% block content %}
+<section class="section page-top">
+  <div class="container job-detail">
+    <a class="back" href="/careers">← All positions</a>
+    <span class="label">{{ job.employment_type }} · {{ job.location }}</span>
+    <h1>{{ job.title }}</h1>
+    <a class="btn btn-solid" href="#apply">Apply now <span class="arrow">→</span></a>
+
+    {% if job.description %}
+    <h3>About the role</h3>
+    {% for para in job.description|lines %}<p class="muted">{{ para }}</p>{% endfor %}
+    {% endif %}
+
+    {% if job.responsibilities %}
+    <h3>What you'll do</h3>
+    <ul class="checklist">{% for item in job.responsibilities|lines %}<li>{{ item }}</li>{% endfor %}</ul>
+    {% endif %}
+
+    {% if job.requirements %}
+    <h3>Requirements</h3>
+    <ul class="checklist">{% for item in job.requirements|lines %}<li>{{ item }}</li>{% endfor %}</ul>
+    {% endif %}
+
+    <div id="apply">{% include "partials/apply_form.html" ignore missing %}</div>
+  </div>
+</section>
+{% endblock %}

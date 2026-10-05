@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}About — {{ company.name }}{% endblock %}
+{% block description %}A technology company building useful, scalable and memorable digital products.{% endblock %}
+{% block content %}
+<section class="section page-top">
+  <div class="container">
+    <span class="label">Who we are</span>
+    <h1>Built to <span class="accent">last.</span></h1>
+    <p class="lead">A technology company focused on building useful, scalable and memorable digital products.</p>
+  </div>
+</section>
+<div class="strip"><div class="container strip-inner">
+  {% for value, label in stats %}<div><b class="accent">{{ value }}</b><span class="muted">{{ label }}</span></div>{% endfor %}
+</div></div>
+<section class="section">
+  <div class="container two-col">
+    <div class="reveal"><span class="label">Mission</span><h2>Make technology useful.</h2>
+      <p class="muted">We turn complex problems into simple, dependable products that people actually enjoy using.</p></div>
+    <div class="reveal"><span class="label">Vision</span><h2>Set the standard.</h2>
+      <p class="muted">To be the studio businesses trust when quality, speed and craft all matter.</p></div>
+  </div>
+</section>
+<section class="section" style="padding-top:0">
+  <div class="container"><span class="label">Values</span>
+    <div class="values">{% for title, text in values %}
+      <div class="card reveal"><h3>{{ title }}</h3><p class="muted">{{ text }}</p><span class="gold-line"></span></div>{% endfor %}
+    </div>
+  </div>
+</section>
+{% include "partials/cta.html" %}
+{% endblock %}

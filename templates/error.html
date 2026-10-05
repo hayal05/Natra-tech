@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} — {{ company.name }}{% endblock %}
+{% block robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block content %}
+<section class="section page-top">
+  <div class="container center-text">
+    <span class="label">Error {{ code }}</span>
+    <h1>{{ title }}<span class="accent">.</span></h1>
+    <p class="lead">{{ message }}</p>
+    <a class="btn" href="/">Back to home <span class="arrow">→</span></a>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block head_extra %}<script type="application/ld+json">{{ {"@context": "https://schema.org", "@type": "Organization", "name": company.name, "url": site_url(), "email": company.email, "telephone": company.phone}|tojson }}</script>{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="label">Technology studio</span>
+      <h1>We build what's <span class="accent">next.</span></h1>
+      <p class="lead">Digital products, software and intelligent systems for modern businesses.</p>
+      <a class="btn" href="/projects">Explore our work <span class="arrow">→</span></a>
+    </div>
+    <div class="orb" aria-hidden="true"><i></i><i></i><i></i></div>
+  </div>
+</section>
+<div class="strip">
+  <div class="container strip-inner">
+    {% for value, label in stats %}<div><b class="accent">{{ value }}</b><span class="muted">{{ label }}</span></div>{% endfor %}
+  </div>
+</div>
+{% if video %}{% set thumb, thumb_fallback = video_thumb(video) %}
+<section class="section video-section" aria-labelledby="video-title">
+  <div class="container reveal">
+    <span class="label">Watch</span>
+    <h2 id="video-title">{{ video.title }}</h2>
+    {% if video.description %}<p class="lead">{{ video.description }}</p>{% endif %}
+    <a class="video-frame" href="https://www.youtube.com/watch?v={{ video.youtube_id }}" target="_blank" rel="noopener"
+       data-video-id="{{ video.youtube_id }}" data-title="{{ video.title }}" aria-label="Play video: {{ video.title }}">
+      <img src="{{ thumb }}"{% if thumb_fallback %} data-fallback="{{ thumb_fallback }}"{% endif %} alt="" loading="lazy" width="1280" height="720">
+      <span class="video-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+    </a>
+  </div>
+</section>
+{% endif %}
+<section class="section">
+  <div class="container">
+    <span class="label">What we do</span><h2>Our services</h2>
+    {% set full = false %}{% include "partials/services_list.html" %}
+  </div>
+</section>
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <span class="label">Selected work</span><h2>Projects</h2>
+    <div class="projects">{% include "partials/projects_list.html" %}</div>
+  </div>
+</section>
+{% include "partials/cta.html" %}
+{% endblock %}

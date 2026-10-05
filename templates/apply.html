@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Apply — {{ job.title }} — {{ company.name }}{% endblock %}
+{% block robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block content %}
+<section class="section page-top">
+  <div class="container job-detail">
+    <a class="back" href="/careers/{{ job.slug }}">← Back to role</a>
+    {% include "partials/apply_form.html" %}
+  </div>
+</section>
+{% endblock %}

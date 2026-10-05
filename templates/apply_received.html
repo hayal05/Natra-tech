@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Application received — {{ company.name }}{% endblock %}
+{% block robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block content %}
+<section class="section page-top">
+  <div class="container job-detail center-text">
+    <span class="label">{{ job.title }}</span>
+    <h1>Application <span class="accent">received</span></h1>
+    <p class="lead">Thank you for applying. Our team will contact you if your application moves forward.</p>
+    <a class="btn" href="/careers">See other roles <span class="arrow">→</span></a>
+  </div>
+</section>
+{% endblock %}

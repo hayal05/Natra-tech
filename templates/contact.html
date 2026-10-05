@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Contact — {{ company.name }}{% endblock %}
+{% block description %}Get in touch to start your next digital product.{% endblock %}
+{% block content %}
+<section class="section page-top">
+  <div class="container two-col">
+    <div>
+      <span class="label">Contact</span>
+      <h1>Let's <span class="accent">talk.</span></h1>
+      <p class="lead">Tell us what you want to build. We reply fast.</p>
+      <a class="btn btn-solid" href="mailto:{{ company.email }}">Email us <span class="arrow">→</span></a>
+    </div>
+    <div class="card contact-card">
+      <h3>Phone</h3><p><a href="tel:{{ company.phone|replace(' ', '') }}">{{ company.phone }}</a></p>
+      <h3>Email</h3><p><a href="mailto:{{ company.email }}">{{ company.email }}</a></p>
+      <h3>Location</h3><p>{{ company.location }}</p>
+      <h3>Follow</h3>
+      <p class="socials">{% for name, url in company.socials %}<a href="{{ url }}" rel="noopener">{{ name }}</a>{% endfor %}</p>
+    </div>
+  </div>
+</section>
+{% endblock %}
