@@ -1,0 +1,25 @@
+{% set errors = errors|default({}) %}{% set values = values|default({}) %}
+<form class="card apply-form" method="post" action="/apply/{{ job.slug }}" novalidate>
+  <h2>Apply for {{ job.title }}</h2>
+  {% if failure %}<p class="error-text" role="alert">Something went wrong and we couldn't save your application. Please try again in a moment.</p>{% endif %}
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+
+  <label for="full_name">Full name</label>
+  <input id="full_name" name="full_name" required maxlength="100" autocomplete="name" placeholder="Your name"
+         value="{{ values.full_name or '' }}" {% if errors.full_name %}aria-invalid="true" aria-describedby="e-name"{% endif %}>
+  {% if errors.full_name %}<p class="error-text" id="e-name">{{ errors.full_name }}</p>{% endif %}
+
+  <label for="phone">Phone number</label>
+  <input id="phone" name="phone" type="tel" required inputmode="tel" autocomplete="tel" placeholder="+251 ..."
+         value="{{ values.phone or '' }}" {% if errors.phone %}aria-invalid="true" aria-describedby="e-phone"{% endif %}>
+  {% if errors.phone %}<p class="error-text" id="e-phone">{{ errors.phone }}</p>{% endif %}
+
+  <label class="check">
+    <input type="checkbox" name="consent" value="1" required>
+    <span>I agree to be contacted regarding this application.</span>
+  </label>
+  {% if errors.consent %}<p class="error-text">{{ errors.consent }}</p>{% endif %}
+
+  <button class="btn btn-solid" type="submit">Submit application <span class="arrow">→</span></button>
+</form>
