@@ -1,0 +1,24 @@
+{% extends "admin/layout.html" %}
+{% block title %}Dashboard — Admin{% endblock %}
+{% block content %}
+<section class="section page-top">
+  <div class="container">
+    <span class="label">Admin</span>
+    <h1>Welcome, <span class="accent">{{ session.admin_name }}</span></h1>
+    <div class="stat-grid">
+      <a class="card stat" href="/admin/jobs"><b class="accent">{{ stats.active_jobs }}</b><span class="muted">Active jobs</span></a>
+      <a class="card stat" href="/admin/applications"><b class="accent">{{ stats.total }}</b><span class="muted">Applications</span></a>
+      <a class="card stat" href="/admin/applications?status=New"><b class="accent">{{ stats.new }}</b><span class="muted">New</span></a>
+    </div>
+    <div class="admin-head"><h2>Recent applications</h2><a class="btn btn-sm" href="/admin/applications">View all <span class="arrow">→</span></a></div>
+    {% if recent %}
+    <div class="table-wrap"><table class="table">
+      <thead><tr><th>Name</th><th>Position</th><th>Date</th><th>Status</th></tr></thead>
+      <tbody>{% for a in recent %}<tr>
+        <td>{{ a.full_name }}</td><td>{{ a.job_title }}</td><td>{{ a.created_at.strftime("%d %b %Y") }}</td>
+        <td><span class="status s-{{ a.status|lower }}">{{ a.status }}</span></td></tr>{% endfor %}</tbody>
+    </table></div>
+    {% else %}<div class="empty"><h2>No applications yet</h2><p class="muted">They'll appear here as people apply.</p></div>{% endif %}
+  </div>
+</section>
+{% endblock %}

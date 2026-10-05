@@ -1,0 +1,34 @@
+{% extends "admin/layout.html" %}
+{% block title %}Videos — Admin{% endblock %}
+{% macro act(video, action, label, confirm=None) %}
+<form class="inline-form" method="post" action="/admin/videos/{{ video.id }}/{{ action }}"{% if confirm %} onsubmit="return confirm('{{ confirm }}')"{% endif %}>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="link-btn" type="submit">{{ label }}</button>
+</form>
+{% endmacro %}
+{% block content %}
+<section class="section page-top">
+  <div class="container">
+    <div class="admin-head"><h1>Videos</h1><a class="btn btn-solid" href="/admin/videos/new">Add video <span class="arrow">+</span></a></div>
+    <p class="muted">The video marked <b class="accent">On homepage</b> appears in the Watch section of the main page. Only one video can be shown at a time.</p>
+    {% if videos %}
+    <div class="table-wrap"><table class="table">
+      <thead><tr><th>Thumbnail</th><th>Title</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody>{% for v in videos %}{% set thumb, thumb_fallback = video_thumb(v) %}
+        <tr>
+          <td><img class="video-thumb-sm" src="{{ thumb }}"{% if thumb_fallback %} data-fallback="{{ thumb_fallback }}"{% endif %} alt="Thumbnail for {{ v.title }}" loading="lazy" width="160" height="90"></td>
+          <td><a href="/admin/videos/{{ v.id }}/edit">{{ v.title }}</a><br>
+            <a class="muted small" href="https://www.youtube.com/watch?v={{ v.youtube_id }}" target="_blank" rel="noopener">youtube.com/watch?v={{ v.youtube_id }}</a><br>
+            <span class="muted small">{{ "Custom thumbnail" if v.has_thumb else "YouTube thumbnail" }}</span></td>
+          <td>{% if v.is_featured %}<span class="status status-published">On homepage</span>{% else %}<span class="status">Not shown</span>{% endif %}</td>
+          <td class="actions">
+            <a href="/admin/videos/{{ v.id }}/edit">Edit</a>
+            {% if v.is_featured %}{{ act(v, "unfeature", "Remove from homepage") }}{% else %}{{ act(v, "feature", "Show on homepage") }}{% endif %}
+            {{ act(v, "delete", "Delete", "Delete this video permanently?") }}
+          </td>
+        </tr>{% endfor %}
+      </tbody>
+    </table></div>
+    {% else %}<div class="empty"><h2>No videos yet</h2><p class="muted">Add a YouTube link to show a video on your homepage.</p></div>{% endif %}
+  </div>
+</section>
+{% endblock %}
