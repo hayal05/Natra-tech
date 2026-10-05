@@ -1,0 +1,9 @@
+<form class="status-form" method="post" action="/admin/applications/{{ a.id }}/status">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <input type="hidden" name="next" value="{{ request.full_path }}">
+  <label class="sr-only" for="s{{ a.id }}">Status for {{ a.full_name }}</label>
+  <select id="s{{ a.id }}" name="status" class="status-select s-{{ a.status|lower }}" onchange="this.form.submit()">
+    {% for s in statuses %}<option{{ " selected" if a.status == s }}>{{ s }}</option>{% endfor %}
+  </select>
+  <noscript><button class="btn btn-sm" type="submit">Save</button></noscript>
+</form>

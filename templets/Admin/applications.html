@@ -1,0 +1,32 @@
+{% extends "admin/layout.html" %}
+{% block title %}Applications — Admin{% endblock %}
+{% block content %}
+<section class="section page-top">
+  <div class="container">
+    <div class="admin-head"><h1>Applications</h1><span class="muted">{{ total }} found</span></div>
+    <form class="filters" method="get" action="/admin/applications">
+      <div><label for="q">Search</label><input id="q" name="q" value="{{ f.q or '' }}" placeholder="Name or phone"></div>
+      <div><label for="job">Job</label><select id="job" name="job"><option value="">All jobs</option>
+        {% for j in jobs %}<option value="{{ j.id }}"{{ " selected" if f.job == j.id|string }}>{{ j.title }}</option>{% endfor %}</select></div>
+      <div><label for="status">Status</label><select id="status" name="status"><option value="">All statuses</option>
+        {% for s in statuses %}<option{{ " selected" if f.status == s }}>{{ s }}</option>{% endfor %}</select></div>
+      <div><label for="sort">Sort</label><select id="sort" name="sort">
+        <option value="newest">Newest first</option><option value="oldest"{{ " selected" if f.sort == "oldest" }}>Oldest first</option></select></div>
+      <button class="btn btn-sm" type="submit">Apply filters</button>
+    </form>
+    {% if rows %}
+    <div class="table-wrap"><table class="table">
+      <thead><tr><th>Applicant</th><th>Phone</th><th>Position</th><th>Date</th><th>Status</th></tr></thead>
+      <tbody>{% for a in rows %}<tr>
+        <td>{{ a.full_name }}</td><td><a href="tel:{{ a.phone }}">{{ a.phone }}</a></td>
+        <td>{{ a.job_title }}</td><td>{{ a.created_at.strftime("%d %b %Y") }}</td><td>{% include "admin/_app_status.html" %}</td></tr>{% endfor %}</tbody>
+    </table></div>
+    {% if pages > 1 %}<nav class="pager" aria-label="Pages">
+      {% if page > 1 %}<a class="btn btn-sm" href="{{ url_for('admin.applications_list', **dict(f.to_dict(), page=page - 1)) }}">← Previous</a>{% endif %}
+      <span class="muted">Page {{ page }} of {{ pages }}</span>
+      {% if page < pages %}<a class="btn btn-sm" href="{{ url_for('admin.applications_list', **dict(f.to_dict(), page=page + 1)) }}">Next →</a>{% endif %}
+    </nav>{% endif %}
+    {% else %}<div class="empty"><h2>No applications found</h2><p class="muted">Try changing or clearing the filters.</p></div>{% endif %}
+  </div>
+</section>
+{% endblock %}
