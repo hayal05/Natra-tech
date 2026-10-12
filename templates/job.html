@@ -7,7 +7,7 @@
   <div class="container job-detail">
     <a class="back" href="/careers">← All positions</a>
     <span class="label">{{ job.employment_type }} · {{ job.location }}</span>
-    <h1>{{ job.title }}</h1>
+    <div class="job-title-row"><h1>{{ job.title }}</h1><span class="job-state {{ 'job-state-closed' if job.deadline and job.deadline < today else 'job-state-open' }}">{{ "Closed" if job.deadline and job.deadline < today else "Open" }}</span></div>
     <p class="job-meta">Posted: {{ job.posted_on.strftime("%d %b %Y") }} · Deadline: {{ job.deadline.strftime("%d %b %Y") if job.deadline else "Open until filled" }}</p>
     <button class="btn" type="button" data-copy-link="{{ url_for('careers.detail', slug=job.slug, _external=True) }}">Copy job link</button>
     {% if job.deadline and job.deadline < today %}<p class="error-text">Applications closed — deadline has passed.</p>
