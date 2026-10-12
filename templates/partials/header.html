@@ -9,6 +9,7 @@
       {% for label, path in nav %}
       <a class="nav-link{{ ' is-active' if request.path.startswith(path) }}" href="{{ path }}">{{ label }}</a>
       {% endfor %}
+      <a class="nav-link{{ ' is-active' if request.path.startswith('/admin') }}" href="/admin">Admin Login</a>
       <a class="btn btn-sm" href="/contact">Let's talk</a>
     </nav>
   </div>
