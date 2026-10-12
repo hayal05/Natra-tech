@@ -1,4 +1,6 @@
 """Careers list and job detail pages."""
+from datetime import date
+
 from flask import Blueprint, abort, render_template
 
 from .. import jobs
@@ -9,10 +11,10 @@ bp = Blueprint("careers", __name__, url_prefix="/careers")
 
 @bp.route("")
 def index():
-    return render_template("careers.html", jobs=jobs.published_jobs())
+    return render_template("careers.html", jobs=jobs.published_jobs(), today=date.today())
 
 
 @bp.route("/<slug>")
 def detail(slug):
     job = jobs.published_job(slug) or abort(404)
-    return render_template("job.html", job=job, ld=job_ld(job))
+    return render_template("job.html", job=job, ld=job_ld(job), today=date.today())
