@@ -19,6 +19,12 @@
       <select id="employment_type" name="employment_type">
         {% for t in types %}<option{{ " selected" if (values.employment_type or "Full Time") == t }}>{{ t }}</option>{% endfor %}
       </select>
+      <label for="posted_on">Date posted</label>
+      <input id="posted_on" name="posted_on" type="date" required value="{{ values.posted_on or (job.posted_on.isoformat() if job and job.posted_on else '') }}">
+      {% if errors.posted_on %}<p class="error-text">{{ errors.posted_on }}</p>{% endif %}
+      <label for="deadline">Application deadline (optional)</label>
+      <input id="deadline" name="deadline" type="date" value="{{ values.deadline or (job.deadline.isoformat() if job and job.deadline else '') }}">
+      {% if errors.deadline %}<p class="error-text">{{ errors.deadline }}</p>{% endif %}
       {{ field("description", "About the role", true) }}
       {{ field("responsibilities", "What you'll do", true, "(one per line)") }}
       {{ field("requirements", "Requirements", true, "(one per line)") }}
