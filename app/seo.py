@@ -15,11 +15,13 @@ def job_ld(job):
     ld = {
         "@context": "https://schema.org", "@type": "JobPosting", "title": job["title"],
         "description": job["description"] or job["title"],
-        "datePosted": job["created_at"].date().isoformat(),
+        "datePosted": job["posted_on"].isoformat(),
         "employmentType": _EMPLOYMENT.get(job["employment_type"], "OTHER"),
         "hiringOrganization": {"@type": "Organization", "name": COMPANY["name"], "sameAs": site_url()},
         "url": f"{site_url()}/careers/{job['slug']}",
     }
+    if job["deadline"]:
+        ld["validThrough"] = job["deadline"].isoformat() + "T23:59:59+03:00"
     place = (job["location"] or "").strip()
     if place.lower() == "remote":
         ld["jobLocationType"] = "TELECOMMUTE"
