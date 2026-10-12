@@ -57,6 +57,20 @@
     });
   });
 
+  // Small accessible confirmation shared by visitor and admin views.
+  const copyNotice = document.createElement("div");
+  copyNotice.className = "copy-link-notice";
+  copyNotice.setAttribute("role", "status");
+  copyNotice.setAttribute("aria-live", "polite");
+  document.body.appendChild(copyNotice);
+  let copyNoticeTimer;
+  function showCopyNotice(message) {
+    clearTimeout(copyNoticeTimer);
+    copyNotice.textContent = message;
+    copyNotice.classList.add("is-visible");
+    copyNoticeTimer = setTimeout(() => copyNotice.classList.remove("is-visible"), 2200);
+  }
+
   // Copy a job's unique public detail URL (admin and visitor pages).
   document.querySelectorAll("[data-copy-link]").forEach((button) => {
     button.addEventListener("click", async () => {
@@ -75,9 +89,7 @@
           if (!document.execCommand("copy")) throw new Error("Copy unsupported");
           input.remove();
         }
-        const original = button.textContent;
-        button.textContent = "Copied!";
-        window.setTimeout(() => { button.textContent = original; }, 1800);
+        showCopyNotice("✓ Link copied");
       } catch (error) {
         window.prompt("Copy this job link:", url);
       }
