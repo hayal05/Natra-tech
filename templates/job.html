@@ -8,7 +8,10 @@
     <a class="back" href="/careers">← All positions</a>
     <span class="label">{{ job.employment_type }} · {{ job.location }}</span>
     <h1>{{ job.title }}</h1>
-    <a class="btn btn-solid" href="#apply">Apply now <span class="arrow">→</span></a>
+    <p class="job-meta">Posted: {{ job.posted_on.strftime("%d %b %Y") }} · Deadline: {{ job.deadline.strftime("%d %b %Y") if job.deadline else "Open until filled" }}</p>
+    <button class="btn" type="button" data-copy-link="{{ url_for('careers.detail', slug=job.slug, _external=True) }}">Copy job link</button>
+    {% if job.deadline and job.deadline < today %}<p class="error-text">Applications closed — deadline has passed.</p>
+    {% else %}<a class="btn btn-solid" href="#apply">Apply now <span class="arrow">→</span></a>{% endif %}
 
     {% if job.description %}
     <h3>About the role</h3>
@@ -25,7 +28,7 @@
     <ul class="checklist">{% for item in job.requirements|lines %}<li>{{ item }}</li>{% endfor %}</ul>
     {% endif %}
 
-    <div id="apply">{% include "partials/apply_form.html" ignore missing %}</div>
+    {% if not job.deadline or job.deadline >= today %}<div id="apply">{% include "partials/apply_form.html" ignore missing %}</div>{% endif %}
   </div>
 </section>
 {% endblock %}
