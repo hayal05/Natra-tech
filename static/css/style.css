@@ -329,3 +329,10 @@ input[type="file"] { padding: .6rem 1rem; }
 .date-picker-field input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0; }
 .date-picker-trigger { position: absolute; right: .45rem; top: 50%; transform: translateY(-50%); display: grid; place-items: center; width: 2.6rem; height: 2.6rem; color: var(--gold); background: var(--card); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; }
 .date-picker-trigger:hover, .date-picker-trigger:focus-visible { border-color: var(--gold); }
+
+/* Understated share action beneath job details, with a brief copied toast. */
+.job-copy-link { display: inline-flex; align-items: center; width: fit-content; background: transparent; border: 0; padding: .35rem 0; margin-top: .15rem; color: var(--gold); font: inherit; font-size: .82rem; letter-spacing: .02em; cursor: pointer; text-align: left; }
+.job-copy-link:hover, .job-copy-link:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+.job-share-row { margin: .2rem 0 1.1rem; }
+.copy-link-notice { position: fixed; bottom: max(1.5rem, env(safe-area-inset-bottom)); left: 50%; transform: translate(-50%, 12px); padding: .55rem .9rem; border: 1px solid #2f8d50; border-radius: 8px; background: #14271c; color: #91e8a9; font-size: .8rem; font-weight: 600; z-index: 200; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .2s ease, transform .2s ease, visibility .2s ease; box-shadow: 0 6px 20px rgba(0,0,0,.22); }
+.copy-link-notice.is-visible { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
