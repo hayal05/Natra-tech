@@ -45,6 +45,18 @@
     });
   });
 
+  // An explicit calendar trigger keeps the picker discoverable on Android and dark themes.
+  document.querySelectorAll("[data-date-target]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const input = document.getElementById(button.dataset.dateTarget);
+      if (!input) return;
+      try {
+        if (typeof input.showPicker === "function") input.showPicker();
+        else { input.focus(); input.click(); }
+      } catch (_) { input.focus(); input.click(); }
+    });
+  });
+
   // Copy a job's unique public detail URL (admin and visitor pages).
   document.querySelectorAll("[data-copy-link]").forEach((button) => {
     button.addEventListener("click", async () => {
