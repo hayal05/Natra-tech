@@ -13,11 +13,13 @@
         <div class="job-main">
           <h2><a href="/careers/{{ job.slug }}">{{ job.title }}</a></h2>
           <p class="job-meta">{{ job.location }} · {{ job.employment_type }}</p>
+          <p class="job-meta">Posted: {{ job.posted_on.strftime("%d %b %Y") }} · Deadline: {{ job.deadline.strftime("%d %b %Y") if job.deadline else "Open until filled" }}</p>
           {% if job.description %}<p class="muted">{{ job.description|truncate(140) }}</p>{% endif %}
         </div>
         <div class="job-side">
-          <span class="badge">Open</span>
-          <a class="btn btn-sm" href="/careers/{{ job.slug }}#apply">Apply <span class="arrow">→</span></a>
+          <span class="badge">{{ "Closed" if job.deadline and job.deadline < today else "Open" }}</span>
+          <button class="btn btn-sm" type="button" data-copy-link="{{ url_for('careers.detail', slug=job.slug, _external=True) }}">Copy link</button>
+          {% if not job.deadline or job.deadline >= today %}<a class="btn btn-sm" href="/careers/{{ job.slug }}#apply">Apply <span class="arrow">→</span></a>{% endif %}
         </div>
       </article>
       {% else %}
