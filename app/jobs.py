@@ -1,11 +1,16 @@
 """Job queries used by public pages."""
 import re
+from datetime import date
 
 from .db import execute, query
 
 
 def published_jobs():
-    return query("SELECT * FROM jobs WHERE status = 'published' ORDER BY created_at DESC")
+    return query("SELECT * FROM jobs WHERE status = 'published' ORDER BY posted_on DESC, created_at DESC")
+
+
+def applications_open(job):
+    return job["status"] == "published" and (job["deadline"] is None or job["deadline"] >= date.today())
 
 
 def published_job(slug):
@@ -43,10 +48,10 @@ def _unique_slug(title):
 
 def create_job(d):
     execute(
-        "INSERT INTO jobs (title, slug, description, responsibilities, requirements, location, employment_type) "
-        "VALUES (%s, %s, %s, %s, %s, %s, %s)",
+        "INSERT INTO jobs (title, slug, description, responsibilities, requirements, location, employment_type, posted_on, deadline) "
+        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
         (d["title"], _unique_slug(d["title"]), d["description"], d["responsibilities"],
-         d["requirements"], d["location"], d["employment_type"]),
+         d["requirements"], d["location"], d["employment_type"], d["posted_on"], d["deadline"] or None),
     )
 
 
@@ -54,9 +59,9 @@ def update_job(job_id, d):
     """Slug is kept stable so published links never break."""
     execute(
         "UPDATE jobs SET title=%s, description=%s, responsibilities=%s, requirements=%s, "
-        "location=%s, employment_type=%s, updated_at=now() WHERE id=%s",
+        "location=%s, employment_type=%s, posted_on=%s, deadline=%s, updated_at=now() WHERE id=%s",
         (d["title"], d["description"], d["responsibilities"], d["requirements"],
-         d["location"], d["employment_type"], job_id),
+         d["location"], d["employment_type"], d["posted_on"], d["deadline"] or None, job_id),
     )
 
 
@@ -78,7 +83,7 @@ def delete_archived(job):
 
 def clean_job(form):
     d = {k: form.get(k, "").strip() for k in
-         ("title", "location", "employment_type", "description", "responsibilities", "requirements")}
+         ("title", "location", "employment_type", "description", "responsibilities", "requirements", "posted_on", "deadline")}
     errors = {}
     if not 2 <= len(d["title"]) <= 150:
         errors["title"] = "Title must be 2-150 characters."
@@ -89,4 +94,18 @@ def clean_job(form):
     for k in ("description", "responsibilities", "requirements"):
         if len(d[k]) > 5000:
             errors[k] = "Too long (max 5,000 characters)."
+    if not d["posted_on"]:
+        d["posted_on"] = date.today().isoformat()
+    try:
+        posted = date.fromisoformat(d["posted_on"])
+    except ValueError:
+        errors["posted_on"] = "Enter a valid posted date."
+        posted = None
+    try:
+        deadline = date.fromisoformat(d["deadline"]) if d["deadline"] else None
+    except ValueError:
+        errors["deadline"] = "Enter a valid deadline."
+        deadline = None
+    if posted and deadline and deadline < posted:
+        errors["deadline"] = "Deadline must be on or after the posted date."
     return d, errors
