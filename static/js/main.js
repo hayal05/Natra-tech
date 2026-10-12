@@ -45,6 +45,33 @@
     });
   });
 
+  // Copy a job's unique public detail URL (admin and visitor pages).
+  document.querySelectorAll("[data-copy-link]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const url = button.dataset.copyLink;
+      if (!url) return;
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(url);
+        } else {
+          const input = document.createElement("textarea");
+          input.value = url;
+          input.style.position = "fixed";
+          input.style.opacity = "0";
+          document.body.appendChild(input);
+          input.select();
+          if (!document.execCommand("copy")) throw new Error("Copy unsupported");
+          input.remove();
+        }
+        const original = button.textContent;
+        button.textContent = "Copied!";
+        window.setTimeout(() => { button.textContent = original; }, 1800);
+      } catch (error) {
+        window.prompt("Copy this job link:", url);
+      }
+    });
+  });
+
   const items = document.querySelectorAll(".reveal");
   if (!("IntersectionObserver" in window)) return items.forEach((el) => el.classList.add("is-visible"));
   const io = new IntersectionObserver((entries) => {
