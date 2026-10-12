@@ -15,6 +15,8 @@ def _job_or_404(slug):
 @bp.route("/<slug>", methods=["GET", "POST"])
 def form(slug):
     job = _job_or_404(slug)
+    if not jobs.applications_open(job):
+        return render_template("apply.html", job=job, closed=True), 410
     if request.method == "GET":
         return render_template("apply.html", job=job)
 
