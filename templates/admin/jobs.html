@@ -14,7 +14,7 @@
       <thead><tr><th>Title</th><th>Location</th><th>Posted</th><th>Deadline</th><th>Status</th><th>Applications</th><th>Actions</th></tr></thead>
       <tbody>{% for job in jobs %}
         <tr>
-          <td><a href="/admin/jobs/{{ job.id }}/edit">{{ job.title }}</a><br><span class="muted small">{{ job.employment_type }}</span></td>
+          <td><a href="/admin/jobs/{{ job.id }}/edit">{{ job.title }}</a><br><span class="muted small">{{ job.employment_type }}</span>{% if job.status == "published" %}<br><button type="button" class="job-copy-link" data-copy-link="{{ url_for('careers.detail', slug=job.slug, _external=True) }}">↗ Copy link</button>{% endif %}</td>
           <td>{{ job.location or "—" }}</td>
           <td>{{ job.posted_on.strftime("%d %b %Y") }}</td>
           <td>{{ job.deadline.strftime("%d %b %Y") if job.deadline else "No deadline" }}</td>
@@ -22,7 +22,6 @@
           <td>{{ job.applications }}</td>
           <td class="actions">
             <a href="/admin/jobs/{{ job.id }}/edit">Edit</a>
-            {% if job.status == "published" %}<button type="button" class="link-btn" data-copy-link="{{ url_for('careers.detail', slug=job.slug, _external=True) }}">Copy link</button>{% endif %}
             {% if job.status == "draft" %}{{ act(job, "publish", "Publish") }}{% endif %}
             {% if job.status == "published" %}{{ act(job, "unpublish", "Unpublish") }}{% endif %}
             {% if job.status != "archived" %}{{ act(job, "archive", "Archive") }}
