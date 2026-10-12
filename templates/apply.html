@@ -5,7 +5,8 @@
 <section class="section page-top">
   <div class="container job-detail">
     <a class="back" href="/careers/{{ job.slug }}">← Back to role</a>
-    {% include "partials/apply_form.html" %}
+    {% if closed %}<div class="card"><h1>Applications closed</h1><p>The application deadline for this position has passed.</p><a class="btn" href="/careers">Browse other jobs</a></div>
+    {% else %}{% include "partials/apply_form.html" %}{% endif %}
   </div>
 </section>
 {% endblock %}
