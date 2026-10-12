@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS jobs (
     requirements     TEXT,
     location         VARCHAR(100),
     employment_type  VARCHAR(50)  NOT NULL DEFAULT 'Full Time',
+    posted_on        DATE NOT NULL DEFAULT CURRENT_DATE,
+    deadline         DATE,
     status           VARCHAR(20)  NOT NULL DEFAULT 'draft'
                      CHECK (status IN ('draft', 'published', 'archived')),
     created_at       TIMESTAMPTZ  NOT NULL DEFAULT now(),
@@ -50,3 +52,7 @@ CREATE TABLE IF NOT EXISTS videos (
     updated_at  TIMESTAMPTZ  NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS idx_one_featured_video ON videos ((is_featured)) WHERE is_featured;
+
+-- Add columns to databases created before job dates were introduced.
+ALTER TABLE jobs ADD COLUMN IF NOT EXISTS posted_on DATE NOT NULL DEFAULT CURRENT_DATE;
+ALTER TABLE jobs ADD COLUMN IF NOT EXISTS deadline DATE;
