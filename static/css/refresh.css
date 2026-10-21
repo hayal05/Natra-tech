@@ -104,3 +104,8 @@ input:focus,select:focus,textarea:focus { box-shadow: 0 0 0 3px rgba(224,184,77,
   .hero-copy,.orb,.orb::after { animation:none !important; }
   .reveal { opacity:1; transform:none; }
 }
+
+/* Official Natra Technology brand mark */
+.site-header .logo { display:inline-flex; align-items:center; gap:.65rem; white-space:nowrap; }
+.site-header .brand-logo { width:38px; height:38px; object-fit:cover; border-radius:11px; flex-shrink:0; }
+@media(max-width:480px) { .site-header .logo { font-size:.88rem; gap:.45rem; letter-spacing:.025em; } .site-header .brand-logo { width:32px; height:32px; border-radius:9px; } }
