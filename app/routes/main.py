@@ -1,5 +1,5 @@
 """Public routes."""
-from flask import Blueprint, Response, abort, jsonify, render_template
+from flask import Blueprint, Response, abort, current_app, jsonify, render_template, send_from_directory
 
 from .. import videos
 from ..content import PROJECTS, SERVICES, STATS, VALUES
@@ -11,6 +11,12 @@ bp = Blueprint("main", __name__)
 def index():
     return render_template("index.html", services=SERVICES, projects=PROJECTS, stats=STATS,
                            video=videos.featured_video())
+
+
+@bp.route("/googleff19c7fdad59d6da.html")
+def google_site_verification():
+    """Serve Google Search Console ownership verification at the domain root."""
+    return send_from_directory(current_app.static_folder, "googleff19c7fdad59d6da.html", mimetype="text/html")
 
 
 @bp.route("/video-thumb/<int:video_id>")
