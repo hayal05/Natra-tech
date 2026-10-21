@@ -1,5 +1,26 @@
 {% extends "base.html" %}
-{% block head_extra %}<script type="application/ld+json">{{ {"@context": "https://schema.org", "@type": "Organization", "name": company.name, "url": site_url(), "email": company.email, "telephone": company.phone}|tojson }}</script>{% endblock %}
+{% block title %}Natra Technology | Software Development & Digital Solutions in Ethiopia{% endblock %}
+{% block description %}Natra Technology builds software, web platforms, AI automation and digital solutions for businesses in Ethiopia.{% endblock %}
+{% block head_extra %}
+<script type="application/ld+json">{{ {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": site_url() ~ "/#website",
+  "url": site_url() ~ "/",
+  "name": "Natra Technology",
+  "alternateName": "Natra"
+}|tojson }}</script>
+<script type="application/ld+json">{{ {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": site_url() ~ "/#organization",
+  "name": company.name,
+  "alternateName": "Natra",
+  "url": site_url() ~ "/",
+  "email": company.email,
+  "telephone": company.phone
+}|tojson }}</script>
+{% endblock %}
 {% block content %}
 <section class="hero">
   <div class="container hero-grid">
