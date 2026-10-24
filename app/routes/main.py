@@ -1,15 +1,14 @@
 """Public routes."""
 from flask import Blueprint, Response, abort, current_app, jsonify, render_template, send_from_directory
 
-from .. import videos
-from ..content import PROJECTS, SERVICES, STATS, VALUES
+from .. import videos, site_content
 
 bp = Blueprint("main", __name__)
 
 
 @bp.route("/")
 def index():
-    return render_template("index.html", services=SERVICES, projects=PROJECTS, stats=STATS,
+    return render_template("index.html", content=site_content.get_content(),
                            video=videos.featured_video())
 
 
@@ -29,17 +28,17 @@ def video_thumb(video_id):
 
 @bp.route("/about")
 def about():
-    return render_template("about.html", stats=STATS, values=VALUES)
+    return render_template("about.html", content=site_content.get_content())
 
 
 @bp.route("/services")
 def services():
-    return render_template("services.html", services=SERVICES)
+    return render_template("services.html", content=site_content.get_content())
 
 
 @bp.route("/projects")
 def projects():
-    return render_template("projects.html", projects=PROJECTS)
+    return render_template("projects.html", content=site_content.get_content())
 
 
 @bp.route("/contact")
