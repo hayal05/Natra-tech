@@ -7,6 +7,7 @@
     <span class="label">Who we are</span>
     <h1>{{ content.about_title }} <span class="accent">{{ content.about_accent }}</span></h1>
     <p class="lead">{{ content.about_description }}</p>
+    {% if content.about_image %}<img class="about-uploaded-image" src="{{ content.about_image }}" alt="Natra Technology company photo" loading="lazy">{% endif %}
   </div>
 </section>
 <div class="strip"><div class="container strip-inner">
