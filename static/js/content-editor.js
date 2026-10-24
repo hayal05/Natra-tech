@@ -2,7 +2,7 @@
 (() => {
   const form = document.getElementById("site-editor");
   if (!form) return;
-  const limits = {stats:{value:40,label:100},projects:{name:120,tags:180,year:12,variant:1},services:{title:120,tagline:240,detail:1000},values:{title:100,description:600}};
+  const limits = {stats:{value:40,label:100},projects:{name:120,tags:180,year:12,variant:1,image_url:500,video_id:250},services:{title:120,tagline:240,detail:1000},values:{title:100,description:600}};
   function renumber(section) {
     const group = section.dataset.collection;
     const rows = [...section.querySelectorAll("[data-entry]")];
@@ -18,6 +18,10 @@
         const label=el.closest("div")?.querySelector("label");
         if(label) label.htmlFor=el.id;
       });
+      const upload = row.querySelector("[data-upload]");
+      if (upload) upload.name = group + "_" + index + "_upload";
+      const remove = row.querySelector("[data-remove-image]");
+      if (remove) remove.name = group + "_" + index + "_remove";
     });
     const add=section.querySelector("[data-add]");
     if(add) add.disabled=rows.length>=Number(section.dataset.limit);
