@@ -30,7 +30,7 @@
       <p class="lead">{{ content.hero_description }}</p>
       <a class="btn" href="/projects">Explore our work <span class="arrow">→</span></a>
     </div>
-    <div class="orb" aria-hidden="true"><i></i><i></i><i></i></div>
+    {% if content.hero_image %}<div class="hero-uploaded-image"><img src="{{ content.hero_image }}" alt="Natra Technology featured image" loading="eager"></div>{% else %}<div class="orb" aria-hidden="true"><i></i><i></i><i></i></div>{% endif %}
   </div>
 </section>
 <div class="strip">
