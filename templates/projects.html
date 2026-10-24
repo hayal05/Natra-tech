@@ -6,7 +6,7 @@
   <div class="container">
     <span class="label">Portfolio</span>
     <h1>Our <span class="accent">work.</span></h1>
-    <div class="projects">{% include "partials/projects_list.html" %}</div>
+    <div class="projects">{% set projects = content.projects %}{% include "partials/projects_list.html" %}</div>
   </div>
 </section>
 {% include "partials/cta.html" %}
