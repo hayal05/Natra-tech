@@ -2,7 +2,7 @@
 from flask import Blueprint, abort, flash, redirect, render_template, request, session, url_for
 
 from .. import applications as apps
-from .. import auth, jobs, videos, site_content
+from .. import auth, jobs, videos, site_content, media
 
 bp = Blueprint("admin", __name__, url_prefix="/admin")
 
@@ -53,9 +53,29 @@ def edit_content():
     if request.method == "POST":
         updated, errors = site_content.from_form(request.form)
         if not errors:
-            site_content.save_content(updated)
-            flash("Website content saved. Public pages now show the updated information.")
-            return redirect(url_for("admin.edit_content"))
+            try:
+                for key in ("hero", "about"):
+                    uploaded = media.upload_image(request.files.get(f"{key}_upload"))
+                    if uploaded:
+                        updated[f"{key}_image"] = uploaded
+                    elif request.form.get(f"{key}_remove") == "1":
+                        updated[f"{key}_image"] = ""
+                for i, project in enumerate(updated["projects"]):
+                    old_url = project["image_url"]
+                    if old_url and not old_url.startswith("https://res.cloudinary.com/"):
+                        raise ValueError("Existing project image URL is invalid.")
+                    uploaded = media.upload_image(request.files.get(f"projects_{i}_upload"))
+                    if uploaded:
+                        project["image_url"] = uploaded
+                    elif request.form.get(f"projects_{i}_remove") == "1":
+                        project["image_url"] = ""
+                    project["video_id"] = media.youtube_id(project["video_id"])
+                site_content.save_content(updated)
+            except ValueError as exc:
+                errors.append(str(exc))
+            if not errors:
+                flash("Website content saved. Public pages now show the updated information.")
+                return redirect(url_for("admin.edit_content"))
         content = updated
     return render_template("admin/content.html", content=content, errors=errors,
                            limits=site_content.LIMITS, variants=site_content.VARIANTS), (400 if errors else 200)
