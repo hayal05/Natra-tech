@@ -31,7 +31,7 @@ FIELDS = {k: 400 for k in DEFAULTS if isinstance(DEFAULTS[k], str) and k not in 
 FIELDS.update({"hero_description": 1000, "about_description": 1000, "mission_description": 1000, "vision_description": 1000})
 COLLECTIONS = {
     "stats": {"value": 40, "label": 100},
-    "projects": {"name": 120, "tags": 180, "year": 12, "variant": 1, "image_url": 500, "video_id": 11},
+    "projects": {"name": 120, "tags": 180, "year": 12, "variant": 1, "image_url": 500, "video_id": 250},
     "services": {"title": 120, "tagline": 240, "detail": 1000},
     "values": {"title": 100, "description": 600},
 }
