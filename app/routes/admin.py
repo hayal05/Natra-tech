@@ -2,7 +2,7 @@
 from flask import Blueprint, abort, flash, redirect, render_template, request, session, url_for
 
 from .. import applications as apps
-from .. import auth, jobs, videos
+from .. import auth, jobs, videos, site_content
 
 bp = Blueprint("admin", __name__, url_prefix="/admin")
 
@@ -43,6 +43,22 @@ def logout():
 @auth.login_required
 def dashboard():
     return render_template("admin/dashboard.html", stats=apps.stats(), recent=apps.recent())
+
+
+@bp.route("/content", methods=["GET", "POST"])
+@auth.login_required
+def edit_content():
+    content = site_content.get_content()
+    errors = []
+    if request.method == "POST":
+        updated, errors = site_content.from_form(request.form)
+        if not errors:
+            site_content.save_content(updated)
+            flash("Website content saved. Public pages now show the updated information.")
+            return redirect(url_for("admin.edit_content"))
+        content = updated
+    return render_template("admin/content.html", content=content, errors=errors,
+                           limits=site_content.LIMITS, variants=site_content.VARIANTS), (400 if errors else 200)
 
 
 def _job_or_404(job_id):
