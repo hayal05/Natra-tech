@@ -12,7 +12,7 @@ class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY")
     DATABASE_URL = os.environ.get("DATABASE_URL")
     SITE_URL = os.environ.get("SITE_URL", "").rstrip("/")  # e.g. https://yourcompany.com
-    MAX_CONTENT_LENGTH = 3 * 1024 * 1024  # request cap; custom thumbnails are limited to 1 MB
+    MAX_CONTENT_LENGTH = 12 * 1024 * 1024  # request cap; custom thumbnails are limited to 1 MB
     SEND_FILE_MAX_AGE_DEFAULT = timedelta(hours=1)
     PERMANENT_SESSION_LIFETIME = timedelta(hours=8)
     SESSION_COOKIE_HTTPONLY = True
