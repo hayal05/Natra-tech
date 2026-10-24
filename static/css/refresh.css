@@ -119,3 +119,17 @@ input:focus,select:focus,textarea:focus { box-shadow: 0 0 0 3px rgba(224,184,77,
 
 /* Prevent the old diamond-logo span styling from affecting wordmark text. */
 .site-header .logo .brand-wordmark, .site-header .logo .brand-natra, .site-header .logo .brand-technology { color: var(--text); margin-right: 0; }
+
+/* Admin website content editor */
+.content-editor-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:1.25rem; margin-bottom:1.5rem; }
+.content-editor-grid .card { min-width:0; }
+.content-editor-grid h2, .content-list-section h2 { font-size:clamp(1.4rem,3vw,2rem); }
+.content-list-section { margin-bottom:1.5rem; }
+.content-rows { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,350px),1fr)); gap:1rem; }
+.content-entry { min-width:0; padding:1.25rem; border:1px solid var(--border); border-radius:12px; background:rgba(255,255,255,.018); }
+.content-entry-header { display:flex; justify-content:space-between; align-items:center; gap:1rem; }
+.content-entry-fields { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,155px),1fr)); gap:.3rem .75rem; }
+.content-entry-fields label { margin:.7rem 0 .35rem; }
+.content-entry-fields textarea { min-height:72px; }
+.content-save-bar { position:sticky; z-index:15; bottom:0; display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:1rem; background:rgba(13,14,19,.97); border:1px solid var(--border); border-radius:14px; backdrop-filter:blur(10px); }
+@media(max-width:520px) { .content-save-bar { flex-direction:column; align-items:stretch; } .content-save-bar .btn { justify-content:center; } }
