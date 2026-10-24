@@ -5,25 +5,25 @@
 <section class="section page-top">
   <div class="container">
     <span class="label">Who we are</span>
-    <h1>Built to <span class="accent">last.</span></h1>
-    <p class="lead">A technology company focused on building useful, scalable and memorable digital products.</p>
+    <h1>{{ content.about_title }} <span class="accent">{{ content.about_accent }}</span></h1>
+    <p class="lead">{{ content.about_description }}</p>
   </div>
 </section>
 <div class="strip"><div class="container strip-inner">
-  {% for value, label in stats %}<div><b class="accent">{{ value }}</b><span class="muted">{{ label }}</span></div>{% endfor %}
+  {% for stat in content.stats %}<div><b class="accent">{{ stat.value }}</b><span class="muted">{{ stat.label }}</span></div>{% endfor %}
 </div></div>
 <section class="section">
   <div class="container two-col">
-    <div class="reveal"><span class="label">Mission</span><h2>Make technology useful.</h2>
-      <p class="muted">We turn complex problems into simple, dependable products that people actually enjoy using.</p></div>
-    <div class="reveal"><span class="label">Vision</span><h2>Set the standard.</h2>
-      <p class="muted">To be the studio businesses trust when quality, speed and craft all matter.</p></div>
+    <div class="reveal"><span class="label">Mission</span><h2>{{ content.mission_title }}</h2>
+      <p class="muted">{{ content.mission_description }}</p></div>
+    <div class="reveal"><span class="label">Vision</span><h2>{{ content.vision_title }}</h2>
+      <p class="muted">{{ content.vision_description }}</p></div>
   </div>
 </section>
 <section class="section" style="padding-top:0">
   <div class="container"><span class="label">Values</span>
-    <div class="values">{% for title, text in values %}
-      <div class="card reveal"><h3>{{ title }}</h3><p class="muted">{{ text }}</p><span class="gold-line"></span></div>{% endfor %}
+    <div class="values">{% for value in content.values %}
+      <div class="card reveal"><h3>{{ value.title }}</h3><p class="muted">{{ value.description }}</p><span class="gold-line"></span></div>{% endfor %}
     </div>
   </div>
 </section>
