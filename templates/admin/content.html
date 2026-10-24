@@ -1,0 +1,82 @@
+{% extends "admin/layout.html" %}
+{% block title %}Website Content — Admin{% endblock %}
+{% block content %}
+<section class="section page-top"><div class="container">
+  <span class="label">Content management</span>
+  <div class="admin-head"><div><h1>Website <span class="accent">Content</span></h1>
+    <p class="lead">Edit public text, statistics, projects, services and company values. Changes publish when you save.</p></div>
+    <a href="/" class="btn btn-sm" target="_blank" rel="noopener">View website ↗</a>
+  </div>
+  {% if errors %}<div class="card" role="alert"><h2>Please fix these fields</h2><ul>{% for error in errors %}<li class="error-text">{{ error }}</li>{% endfor %}</ul></div>{% endif %}
+  <form method="post" action="{{ url_for('admin.edit_content') }}" id="site-editor">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="content-editor-grid">
+      <section class="card"><h2>Homepage hero</h2>
+        {% for key, label in [('hero_label','Eyebrow label'),('hero_title','Headline'),('hero_accent','Highlighted headline'),('hero_description','Description')] %}
+        <label for="{{ key }}">{{ label }}</label>
+        {% if key == 'hero_description' %}<textarea id="{{ key }}" name="{{ key }}" rows="3" required maxlength="1000">{{ content[key] }}</textarea>
+        {% else %}<input id="{{ key }}" name="{{ key }}" value="{{ content[key] }}" maxlength="400" required>{% endif %}
+        {% endfor %}
+      </section>
+      <section class="card"><h2>About page</h2>
+        {% for key, label in [('about_title','Headline'),('about_accent','Highlighted headline'),('about_description','Introduction'),('mission_title','Mission title'),('mission_description','Mission description'),('vision_title','Vision title'),('vision_description','Vision description')] %}
+        <label for="{{ key }}">{{ label }}</label>
+        {% if key.endswith('description') %}<textarea id="{{ key }}" name="{{ key }}" rows="2" maxlength="1000" required>{{ content[key] }}</textarea>
+        {% else %}<input id="{{ key }}" name="{{ key }}" value="{{ content[key] }}" maxlength="400" required>{% endif %}
+        {% endfor %}
+      </section>
+      <section class="card"><h2>Call to action</h2>
+        <label for="cta_title">Headline</label><input id="cta_title" name="cta_title" value="{{ content.cta_title }}" required maxlength="400">
+        <label for="cta_accent">Highlighted word</label><input id="cta_accent" name="cta_accent" value="{{ content.cta_accent }}" required maxlength="400">
+      </section>
+    </div>
+    {% for group, heading, fields in [
+      ('stats','Statistics',[('value','Value'),('label','Caption')]),
+      ('projects','Projects',[('name','Project name'),('tags','Category / tags'),('year','Year'),('variant','Card style')]),
+      ('services','Services',[('title','Service'),('tagline','Tagline'),('detail','Full description')]),
+      ('values','Company values',[('title','Value'),('description','Description')])
+    ] %}
+    <section class="card content-list-section" data-collection="{{ group }}" data-limit="{{ limits[group] }}">
+      <div class="admin-head"><div><h2>{{ heading }}</h2><p class="muted">Edit or remove entries; use Add to create new ones.</p></div>
+        <button class="btn btn-sm" type="button" data-add="{{ group }}">+ Add {{ group[:-1] if group != 'values' else 'value' }}</button>
+      </div>
+      <input type="hidden" name="{{ group }}_count" value="{{ content[group]|length }}">
+      <div class="content-rows" data-rows="{{ group }}">
+        {% for item in content[group] %}
+        <div class="content-entry" data-entry>
+          <div class="content-entry-header"><strong>{{ heading }} #{{ loop.index }}</strong><button type="button" class="link-btn" data-remove>Remove</button></div>
+          <div class="content-entry-fields">
+            {% for key, caption in fields %}
+            <div><label>{{ caption }}</label>
+            {% if key == 'variant' %}
+            <select name="{{ group }}_{{ loop.index0 if false else loop.index0 }}_variant" data-field="variant">
+              {% for v in variants %}<option value="{{ v }}" {% if item.variant == v %}selected{% endif %}>Style {{ v|upper }}</option>{% endfor %}
+            </select>
+            {% elif key in ['description','detail','tagline'] %}
+            <textarea data-field="{{ key }}" rows="2" required>{{ item[key] }}</textarea>
+            {% else %}
+            <input data-field="{{ key }}" value="{{ item[key] }}" required>
+            {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <template data-template="{{ group }}"><div class="content-entry" data-entry>
+        <div class="content-entry-header"><strong>New entry</strong><button class="link-btn" type="button" data-remove>Remove</button></div>
+        <div class="content-entry-fields">
+          {% for key, caption in fields %}<div><label>{{ caption }}</label>
+            {% if key == 'variant' %}<select data-field="{{ key }}">{% for v in variants %}<option value="{{ v }}">Style {{ v|upper }}</option>{% endfor %}</select>
+            {% elif key in ['description','detail','tagline'] %}<textarea data-field="{{ key }}" required rows="2"></textarea>
+            {% else %}<input data-field="{{ key }}" required>{% endif %}
+          </div>{% endfor %}
+        </div>
+      </div></template>
+    </section>
+    {% endfor %}
+    <div class="content-save-bar"><span class="muted">Updates go live when saved.</span><button class="btn btn-solid" type="submit">Save website content →</button></div>
+  </form>
+</div></section>
+<script src="{{ url_for('static', filename='js/content-editor.js', v='20261024a') }}" defer></script>
+{% endblock %}
