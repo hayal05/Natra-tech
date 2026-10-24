@@ -56,3 +56,10 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_one_featured_video ON videos ((is_featured
 -- Add columns to databases created before job dates were introduced.
 ALTER TABLE jobs ADD COLUMN IF NOT EXISTS posted_on DATE NOT NULL DEFAULT CURRENT_DATE;
 ALTER TABLE jobs ADD COLUMN IF NOT EXISTS deadline DATE;
+
+-- Public website content editable from Admin > Website Content.
+CREATE TABLE IF NOT EXISTS site_content (
+    id SMALLINT PRIMARY KEY CHECK (id = 1),
+    content JSONB NOT NULL,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
