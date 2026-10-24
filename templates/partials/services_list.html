@@ -1,10 +1,10 @@
-{% for num, title, tagline, detail in services %}
+{% for service in services %}
 <article class="service reveal">
-  <span class="service-num">{{ num }}</span>
+  <span class="service-num">{{ "%02d"|format(loop.index) }}</span>
   <div>
-    <h3>{{ title }}</h3>
-    <p class="service-tag">{{ tagline }}</p>
-    {% if full %}<p class="service-detail muted">{{ detail }}</p>{% endif %}
+    <h3>{{ service.title }}</h3>
+    <p class="service-tag">{{ service.tagline }}</p>
+    {% if full %}<p class="service-detail muted">{{ service.detail }}</p>{% endif %}
     <span class="gold-line"></span>
   </div>
 </article>
