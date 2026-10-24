@@ -8,7 +8,7 @@
     <a href="/" class="btn btn-sm" target="_blank" rel="noopener">View website ↗</a>
   </div>
   {% if errors %}<div class="card" role="alert"><h2>Please fix these fields</h2><ul>{% for error in errors %}<li class="error-text">{{ error }}</li>{% endfor %}</ul></div>{% endif %}
-  <form method="post" action="{{ url_for('admin.edit_content') }}" id="site-editor">
+  <form method="post" action="{{ url_for('admin.edit_content') }}" id="site-editor" enctype="multipart/form-data">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <div class="content-editor-grid">
       <section class="card"><h2>Homepage hero</h2>
@@ -17,6 +17,11 @@
         {% if key == 'hero_description' %}<textarea id="{{ key }}" name="{{ key }}" rows="3" required maxlength="1000">{{ content[key] }}</textarea>
         {% else %}<input id="{{ key }}" name="{{ key }}" value="{{ content[key] }}" maxlength="400" required>{% endif %}
         {% endfor %}
+        <label for="hero_upload">Homepage image (optional)</label>
+        {% if content.hero_image %}<img src="{{ content.hero_image }}" alt="Current homepage image" style="max-width:180px;max-height:120px;display:block">{% endif %}
+        <input type="hidden" name="hero_image" value="{{ content.hero_image }}">
+        <input id="hero_upload" type="file" name="hero_upload" accept="image/jpeg,image/png,image/webp">
+        <label><input type="checkbox" name="hero_remove" value="1"> Remove current homepage image</label>
       </section>
       <section class="card"><h2>About page</h2>
         {% for key, label in [('about_title','Headline'),('about_accent','Highlighted headline'),('about_description','Introduction'),('mission_title','Mission title'),('mission_description','Mission description'),('vision_title','Vision title'),('vision_description','Vision description')] %}
@@ -24,6 +29,11 @@
         {% if key.endswith('description') %}<textarea id="{{ key }}" name="{{ key }}" rows="2" maxlength="1000" required>{{ content[key] }}</textarea>
         {% else %}<input id="{{ key }}" name="{{ key }}" value="{{ content[key] }}" maxlength="400" required>{% endif %}
         {% endfor %}
+        <label for="about_upload">About-page image (optional)</label>
+        {% if content.about_image %}<img src="{{ content.about_image }}" alt="Current about image" style="max-width:180px;max-height:120px;display:block">{% endif %}
+        <input type="hidden" name="about_image" value="{{ content.about_image }}">
+        <input id="about_upload" type="file" name="about_upload" accept="image/jpeg,image/png,image/webp">
+        <label><input type="checkbox" name="about_remove" value="1"> Remove current About image</label>
       </section>
       <section class="card"><h2>Call to action</h2>
         <label for="cta_title">Headline</label><input id="cta_title" name="cta_title" value="{{ content.cta_title }}" required maxlength="400">
@@ -32,7 +42,7 @@
     </div>
     {% for group, heading, fields in [
       ('stats','Statistics',[('value','Value'),('label','Caption')]),
-      ('projects','Projects',[('name','Project name'),('tags','Category / tags'),('year','Year'),('variant','Card style')]),
+      ('projects','Projects',[('name','Project name'),('tags','Category / tags'),('year','Year'),('variant','Card style'),('video_id','YouTube URL or video ID')]),
       ('services','Services',[('title','Service'),('tagline','Tagline'),('detail','Full description')]),
       ('values','Company values',[('title','Value'),('description','Description')])
     ] %}
@@ -60,6 +70,14 @@
             </div>
             {% endfor %}
           </div>
+          {% if group == 'projects' %}
+          <div class="project-media-admin">
+            {% if item.image_url %}<img src="{{ item.image_url }}" alt="Current project photo">{% endif %}
+            <label>Project image</label><input type="file" data-upload accept="image/jpeg,image/png,image/webp">
+            <input type="hidden" data-field="image_url" value="{{ item.image_url }}">
+            <label><input type="checkbox" data-remove-image value="1"> Remove image</label>
+          </div>
+          {% endif %}
         </div>
         {% endfor %}
       </div>
@@ -72,11 +90,12 @@
             {% else %}<input data-field="{{ key }}" required>{% endif %}
           </div>{% endfor %}
         </div>
+        {% if group == 'projects' %}<div class="project-media-admin"><label>Project image</label><input type="file" data-upload accept="image/jpeg,image/png,image/webp"><input type="hidden" data-field="image_url" value=""><label><input type="checkbox" data-remove-image value="1"> Remove image</label></div>{% endif %}
       </div></template>
     </section>
     {% endfor %}
     <div class="content-save-bar"><span class="muted">Updates go live when saved.</span><button class="btn btn-solid" type="submit">Save website content →</button></div>
   </form>
 </div></section>
-<script src="{{ url_for('static', filename='js/content-editor.js', v='20261024a') }}" defer></script>
+<script src="{{ url_for('static', filename='js/content-editor.js', v='20261024b') }}" defer></script>
 {% endblock %}
