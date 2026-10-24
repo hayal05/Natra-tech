@@ -6,7 +6,7 @@
   <div class="container">
     <span class="label">What we do</span>
     <h1>Services<span class="accent">.</span></h1>
-    {% set full = true %}{% include "partials/services_list.html" %}
+    {% set full = true %}{% set services = content.services %}{% include "partials/services_list.html" %}
   </div>
 </section>
 {% include "partials/cta.html" %}
