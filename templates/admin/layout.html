@@ -8,6 +8,7 @@
       <a href="/admin/dashboard" class="nav-link{{ ' is-active' if request.path == '/admin/dashboard' }}">Dashboard</a>
       <a href="/admin/applications" class="nav-link{{ ' is-active' if request.path.startswith('/admin/applications') }}">Applications</a>
       <a href="/admin/jobs" class="nav-link{{ ' is-active' if request.path.startswith('/admin/jobs') }}">Jobs</a>
+      <a href="/admin/content" class="nav-link{{ ' is-active' if request.path == '/admin/content' }}">Website Content</a>
       <a href="/admin/videos" class="nav-link{{ ' is-active' if request.path.startswith('/admin/videos') }}">Videos</a>
       <form method="post" action="/admin/logout">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
