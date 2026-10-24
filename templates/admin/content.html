@@ -65,7 +65,7 @@
             {% elif key in ['description','detail','tagline'] %}
             <textarea data-field="{{ key }}" rows="2" required>{{ item[key] }}</textarea>
             {% else %}
-            <input data-field="{{ key }}" value="{{ item[key] }}" required>
+            <input data-field="{{ key }}" value="{{ item[key] }}" {% if key != "video_id" %}required{% endif %}>
             {% endif %}
             </div>
             {% endfor %}
@@ -87,7 +87,7 @@
           {% for key, caption in fields %}<div><label>{{ caption }}</label>
             {% if key == 'variant' %}<select data-field="{{ key }}">{% for v in variants %}<option value="{{ v }}">Style {{ v|upper }}</option>{% endfor %}</select>
             {% elif key in ['description','detail','tagline'] %}<textarea data-field="{{ key }}" required rows="2"></textarea>
-            {% else %}<input data-field="{{ key }}" required>{% endif %}
+            {% else %}<input data-field="{{ key }}" {% if key != "video_id" %}required{% endif %}>{% endif %}
           </div>{% endfor %}
         </div>
         {% if group == 'projects' %}<div class="project-media-admin"><label>Project image</label><input type="file" data-upload accept="image/jpeg,image/png,image/webp"><input type="hidden" data-field="image_url" value=""><label><input type="checkbox" data-remove-image value="1"> Remove image</label></div>{% endif %}
