@@ -49,7 +49,7 @@
             {% for key, caption in fields %}
             <div><label>{{ caption }}</label>
             {% if key == 'variant' %}
-            <select name="{{ group }}_{{ loop.index0 if false else loop.index0 }}_variant" data-field="variant">
+            <select data-field="variant">
               {% for v in variants %}<option value="{{ v }}" {% if item.variant == v %}selected{% endif %}>Style {{ v|upper }}</option>{% endfor %}
             </select>
             {% elif key in ['description','detail','tagline'] %}
