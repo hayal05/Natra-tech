@@ -23,7 +23,7 @@ def init_csrf(app):
 
 CSP = ("default-src 'self'; script-src 'self'; script-src-attr 'unsafe-inline'; "
        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; "
-       "img-src 'self' data: https://i.ytimg.com; "
+       "img-src 'self' data: https://i.ytimg.com https://res.cloudinary.com; "
        "frame-src https://www.youtube-nocookie.com; form-action 'self'; base-uri 'self'; frame-ancestors 'none'")
 
 
