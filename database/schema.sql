@@ -63,3 +63,23 @@ CREATE TABLE IF NOT EXISTS site_content (
     content JSONB NOT NULL,
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+-- Device-bound offline license request workflow.
+CREATE TABLE IF NOT EXISTS license_requests (
+ id BIGSERIAL PRIMARY KEY,
+ customer_name VARCHAR(120) NOT NULL,
+ customer_email VARCHAR(254) NOT NULL,
+ product_code VARCHAR(60) NOT NULL,
+ hardware_id VARCHAR(180) NOT NULL,
+ payment_note VARCHAR(150),
+ proof_data BYTEA NOT NULL,
+ proof_mime VARCHAR(30) NOT NULL,
+ access_hash CHAR(64) NOT NULL UNIQUE,
+ status VARCHAR(16) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending','approved','rejected')),
+ license_key TEXT,
+ admin_note VARCHAR(500),
+ approved_by INTEGER REFERENCES admins(id) ON DELETE SET NULL,
+ created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+ reviewed_at TIMESTAMPTZ
+);
+CREATE INDEX IF NOT EXISTS idx_license_requests_status ON license_requests(status, created_at DESC);
