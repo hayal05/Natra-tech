@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Request a Product License — Natra Technology{% endblock %}
+{% block robots %}<meta name="robots" content="noindex, nofollow">{% endblock %}
+{% block content %}
+<section class="section page-top"><div class="container" style="max-width:760px">
+<span class="label">Software licensing</span><h1>Request a <span class="accent">product key.</span></h1>
+<p class="lead">Provide your software product code and the hardware ID shown inside the app. Upload proof of payment. Every request requires manual admin approval; submitting a request does not activate your software.</p>
+{% if error %}<div class="flash" role="alert">{{ error }}</div>{% endif %}
+<form method="post" enctype="multipart/form-data" class="card license-form">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<label for="customer_name">Full name</label><input id="customer_name" name="customer_name" required maxlength="120" value="{{ request.form.get('customer_name','') }}">
+<label for="customer_email">Email</label><input id="customer_email" type="email" name="customer_email" required maxlength="254" value="{{ request.form.get('customer_email','') }}">
+<label for="product_code">Software product code</label><input id="product_code" name="product_code" required maxlength="60" placeholder="e.g. natra-restaurant" value="{{ request.form.get('product_code','') }}">
+<label for="hardware_id">Hardware ID (copy from the offline software)</label><input id="hardware_id" name="hardware_id" required maxlength="180" autocomplete="off" value="{{ request.form.get('hardware_id','') }}">
+<label for="payment_note">Payment reference (optional)</label><input id="payment_note" name="payment_note" maxlength="150" value="{{ request.form.get('payment_note','') }}">
+<label for="payment_proof">Payment screenshot (JPG, PNG or WebP; up to 2 MB)</label><input id="payment_proof" type="file" name="payment_proof" accept="image/jpeg,image/png,image/webp" required>
+<p class="muted">Payment evidence is visible only to authorized administrators. Do not upload passwords, card numbers or identity documents.</p>
+<button class="btn btn-solid" type="submit">Submit license request →</button>
+</form></div></section>
+{% endblock %}
