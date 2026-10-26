@@ -8,7 +8,7 @@ from . import db
 from .config import Config
 from .content import COMPANY
 from . import errors, videos
-from .routes import admin, apply, careers, main, seo as seo_routes
+from .routes import admin, apply, careers, main, licenses, seo as seo_routes
 from .security import init_csrf, init_headers
 from .seo import site_url
 
@@ -34,5 +34,6 @@ def create_app():
     app.register_blueprint(careers.bp)
     app.register_blueprint(apply.bp)
     app.register_blueprint(admin.bp)
+    app.register_blueprint(licenses.bp)
     app.register_blueprint(seo_routes.bp)
     return app
