@@ -1,8 +1,8 @@
 """Admin area routes: login, jobs and applications management."""
-from flask import Blueprint, abort, flash, redirect, render_template, request, session, url_for
+from flask import Blueprint, abort, flash, redirect, render_template, request, session, url_for, Response
 
 from .. import applications as apps
-from .. import auth, jobs, videos, site_content, media
+from .. import auth, jobs, videos, site_content, media, licensing
 
 bp = Blueprint("admin", __name__, url_prefix="/admin")
 
@@ -180,3 +180,34 @@ def video_action(video_id, action):
     else:
         abort(404)
     return redirect(url_for("admin.videos_list"))
+
+@bp.route("/licenses")
+@auth.login_required
+def license_requests():
+    return render_template("admin/license_requests.html",
+                           rows=licensing.list_requests(request.args.get("status", "pending")))
+
+@bp.route("/licenses/<int:request_id>")
+@auth.login_required
+def license_detail(request_id):
+    item = licensing.admin_request(request_id) or abort(404)
+    return render_template("admin/license_detail.html", item=item, error=None)
+
+@bp.route("/licenses/<int:request_id>/proof")
+@auth.login_required
+def license_payment_image(request_id):
+    proof = licensing.get_proof(request_id) or abort(404)
+    return Response(bytes(proof["proof_data"]), mimetype=proof["proof_mime"],
+                    headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"})
+
+@bp.route("/licenses/<int:request_id>/review", methods=["POST"])
+@auth.login_required
+def license_review(request_id):
+    try:
+        licensing.review(request_id, request.form.get("action", ""),
+                         session["admin_id"], request.form.get("admin_note", "").strip())
+        flash("License request reviewed.")
+        return redirect(url_for("admin.license_detail", request_id=request_id))
+    except ValueError as exc:
+        item = licensing.admin_request(request_id) or abort(404)
+        return render_template("admin/license_detail.html", item=item, error=str(exc)), 400
