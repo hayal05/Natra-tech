@@ -1,0 +1,13 @@
+{% extends "admin/layout.html" %}
+{% block title %}License Requests — Admin{% endblock %}
+{% block content %}
+<section class="section page-top"><div class="container">
+<span class="label">Licensing</span><h1>Product key <span class="accent">approvals.</span></h1>
+<p class="lead">Review payment screenshots and hardware IDs before issuing a device-bound license.</p>
+<p><a href="?status=pending">Pending</a> · <a href="?status=approved">Approved</a> · <a href="?status=rejected">Rejected</a></p>
+<div class="table-wrap"><table class="table"><thead><tr><th>ID</th><th>Customer</th><th>Product</th><th>Hardware ID</th><th>Submitted</th><th>Status</th></tr></thead>
+<tbody>{% for r in rows %}
+<tr><td><a href="{{ url_for('admin.license_detail', request_id=r.id) }}">#{{ r.id }}</a></td>
+<td>{{ r.customer_name }}<p class="muted">{{ r.customer_email }}</p></td><td>{{ r.product_code }}</td><td><code>{{ r.hardware_id }}</code></td><td>{{ r.created_at.strftime('%d %b %Y') }}</td><td>{{ r.status }}</td></tr>
+{% else %}<tr><td colspan="6">No matching requests.</td></tr>{% endfor %}</tbody></table></div></div></section>
+{% endblock %}

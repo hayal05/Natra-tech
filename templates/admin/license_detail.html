@@ -1,0 +1,28 @@
+{% extends "admin/layout.html" %}
+{% block title %}License Review #{{ item.id }} — Admin{% endblock %}
+{% block content %}
+<section class="section page-top"><div class="container" style="max-width:900px">
+<a href="{{ url_for('admin.license_requests') }}">← All license requests</a>
+<h1>Request <span class="accent">#{{ item.id }}</span></h1>
+{% if error %}<div class="flash" role="alert">{{ error }}</div>{% endif %}
+<div class="card">
+<p><b>Customer:</b> {{ item.customer_name }} · {{ item.customer_email }}</p>
+<p><b>Product:</b> {{ item.product_code }}</p><p><b>Hardware ID:</b> <code>{{ item.hardware_id }}</code></p>
+<p><b>Payment reference:</b> {{ item.payment_note or 'Not provided' }}</p>
+<p><b>Status:</b> {{ item.status }}</p>
+<h2>Payment screenshot</h2>
+<img src="{{ url_for('admin.license_payment_image', request_id=item.id) }}" alt="Customer-submitted payment screenshot" style="max-width:100%;max-height:650px;object-fit:contain">
+{% if item.status == 'pending' %}
+<p class="muted">Verify the payment independently. Screenshots alone do not prove payment.</p>
+<form action="{{ url_for('admin.license_review', request_id=item.id) }}" method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<label for="admin_note">Review note (optional)</label><textarea id="admin_note" name="admin_note" maxlength="500" rows="3"></textarea>
+<div style="display:flex;gap:1rem;flex-wrap:wrap">
+<button class="btn btn-solid" name="action" value="approve" type="submit" onclick="return confirm('Payment verified? Issue a signed product key now?')">Approve and issue key</button>
+<button class="btn" name="action" value="reject" type="submit" onclick="return confirm('Reject this license request?')">Reject</button>
+</div></form>
+{% elif item.license_key %}<h2>Issued license</h2><textarea readonly rows="5" style="width:100%">{{ item.license_key }}</textarea>
+{% endif %}
+{% if item.admin_note %}<p><b>Review note:</b> {{ item.admin_note }}</p>{% endif %}
+</div></div></section>
+{% endblock %}

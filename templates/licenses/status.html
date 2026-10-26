@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}License Request Status — Natra Technology{% endblock %}
+{% block robots %}<meta name="robots" content="noindex, nofollow">{% endblock %}
+{% block content %}
+<section class="section page-top"><div class="container" style="max-width:760px">
+<span class="label">License request</span><h1>Request <span class="accent">#{{ item.id }}</span></h1>
+<div class="card">
+<p><b>Status:</b> {{ item.status|capitalize }}</p>
+<p><b>Product:</b> {{ item.product_code }}</p>
+<p><b>Hardware ID:</b> <code>{{ item.hardware_id }}</code></p>
+{% if item.status == 'approved' and item.license_key %}
+<h2>Your product key</h2><p>Copy the complete key into the offline application's activation screen.</p>
+<textarea rows="5" readonly style="width:100%;overflow-wrap:anywhere">{{ item.license_key }}</textarea>
+{% elif item.status == 'rejected' %}
+<p>Your request was not approved. Contact support for more information.</p>
+{% else %}<p>Your payment screenshot and hardware ID have been submitted. An administrator must review the request before a key is issued.</p>{% endif %}
+{% if item.admin_note %}<p><b>Admin note:</b> {{ item.admin_note }}</p>{% endif %}
+<p class="muted">Save this private status URL. Anyone with the complete link can view your key after approval. We do not automatically email keys.</p>
+</div></div></section>
+{% endblock %}
