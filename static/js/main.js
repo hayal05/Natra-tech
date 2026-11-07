@@ -12,11 +12,21 @@
     function setMenu(open) {
       toggle.setAttribute("aria-expanded", open);
       links.classList.toggle("is-open", open);
-      document.body.style.overflow = open ? "hidden" : "";
+      toggle.setAttribute("aria-label", open ? "Close navigation menu" : "Open navigation menu");
+      document.body.classList.toggle("nav-menu-open", open);
     }
     toggle.addEventListener("click", () => setMenu(toggle.getAttribute("aria-expanded") !== "true"));
-    links.addEventListener("click", (e) => e.target.closest("a") && setMenu(false));
-    document.addEventListener("keydown", (e) => e.key === "Escape" && setMenu(false));
+    links.addEventListener("click", (e) => { if (e.target.closest("a")) setMenu(false); });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
+        setMenu(false);
+        toggle.focus();
+      }
+    });
+    window.addEventListener("resize", () => { if (window.innerWidth > 1100) setMenu(false); });
+    document.addEventListener("click", (e) => {
+      if (toggle.getAttribute("aria-expanded") === "true" && !header.contains(e.target)) setMenu(false);
+    });
   }
 
   // Thumbnails: fall back to the smaller YouTube image when the max-res one doesn't exist.

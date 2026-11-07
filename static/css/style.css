@@ -1,14 +1,33 @@
 /* ===== 1. Tokens ===== */
 :root {
-  --bg: #050505;
-  --bg-2: #0d0d0d;
-  --card: #141414;
-  --gold: #d4af37;
-  --gold-bright: #f2d675;
+  /* Canonical NATRA palette: retained from the existing visual refresh. */
+  --bg: #08090d;
+  --bg-2: #101117;
+  --card: #15171d;
+  --gold: #e0b84d;
+  --gold-bright: #ffe39a;
   --text: #f5f5f5;
-  --muted: #8e8e8e;
-  --border: #262626;
+  --muted: #a7aab5;
+  --border: #292b32;
   --danger: #e5736a;
+
+  /* Semantic aliases for reusable components and future layouts. */
+  --surface: var(--bg-2);
+  --surface-raised: var(--card);
+  --accent-primary: var(--gold);
+  --accent-hover: var(--gold-bright);
+  --text-primary: var(--text);
+  --text-secondary: var(--muted);
+  --border-subtle: var(--border);
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: .75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
 
   --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --container: 1180px;

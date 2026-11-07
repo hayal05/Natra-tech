@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Apply — {{ job.title }} — {{ company.name }}{% endblock %}
 {% block robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block head_extra %}<link rel="stylesheet" href="{{ url_for('static', filename='css/careers-contact.css', v='20261107a') }}">{% endblock %}
 {% block content %}
-<section class="section page-top">
-  <div class="container job-detail">
+<section class="section page-top nt-application-page">
+  <div class="container job-detail nt-application-shell">
     <a class="back" href="/careers/{{ job.slug }}">← Back to role</a>
     {% if closed %}<div class="card"><h1>Applications closed</h1><p>The application deadline for this position has passed.</p><a class="btn" href="/careers">Browse other jobs</a></div>
     {% else %}{% include "partials/apply_form.html" %}{% endif %}

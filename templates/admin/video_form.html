@@ -12,7 +12,7 @@
   <div class="container job-detail">
     <a class="back" href="/admin/videos">← All videos</a>
     <h1>{{ "Edit video" if video else "Add video" }}</h1>
-    <form class="card" method="post" enctype="multipart/form-data" novalidate>
+    <form class="card nt-admin-form-card" method="post" enctype="multipart/form-data" novalidate>
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       {{ field("title", "Title") }}
       {{ field("url", "YouTube link", hint="(watch, youtu.be or shorts link)", value=(values.url if values.url is defined else current_url)) }}

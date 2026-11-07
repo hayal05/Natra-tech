@@ -11,7 +11,7 @@
   <div class="container job-detail">
     <a class="back" href="/admin/jobs">← All jobs</a>
     <h1>{{ "Edit job" if job else "New job" }}</h1>
-    <form class="card" method="post" novalidate>
+    <form class="card nt-admin-form-card" method="post" novalidate>
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       {{ field("title", "Title") }}
       {{ field("location", "Location") }}

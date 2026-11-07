@@ -1,26 +1,105 @@
 {% extends "admin/layout.html" %}
 {% block title %}Dashboard — Admin{% endblock %}
+{% block head_extra %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin-dashboard.css', v='20261107a') }}">
+{% endblock %}
 {% block content %}
-<section class="section page-top">
+<section class="section page-top nt-dashboard" aria-labelledby="dashboard-title">
   <div class="container">
-    <span class="label">Admin</span>
-    <h1>Welcome, <span class="accent">{{ session.admin_name }}</span></h1>
-    <div class="stat-grid">
-      <a class="card stat" href="/admin/jobs"><b class="accent">{{ stats.active_jobs }}</b><span class="muted">Active jobs</span></a>
-      <a class="card stat" href="/admin/applications"><b class="accent">{{ stats.total }}</b><span class="muted">Applications</span></a>
-      <a class="card stat" href="/admin/applications?status=New"><b class="accent">{{ stats.new }}</b><span class="muted">New</span></a>
+    <div class="nt-dashboard-heading">
+      <div>
+        <span class="label">Overview</span>
+        <h1 id="dashboard-title">Dashboard<span class="accent">.</span></h1>
+        <p class="nt-dashboard-greeting">Welcome back, <strong>{{ session.admin_name }}</strong>.</p>
+      </div>
+      <a class="nt-dashboard-site-link" href="/" target="_blank" rel="noopener noreferrer">View website <span aria-hidden="true">↗</span></a>
     </div>
-    <p><a class="btn" href="/admin/licenses">Review license requests →</a></p>
-    <p><a class="btn" href="/admin/content">Manage website content <span class="arrow">→</span></a></p>
-    <div class="admin-head"><h2>Recent applications</h2><a class="btn btn-sm" href="/admin/applications">View all <span class="arrow">→</span></a></div>
-    {% if recent %}
-    <div class="table-wrap"><table class="table">
-      <thead><tr><th>Name</th><th>Position</th><th>Date</th><th>Status</th></tr></thead>
-      <tbody>{% for a in recent %}<tr>
-        <td>{{ a.full_name }}</td><td>{{ a.job_title }}</td><td>{{ a.created_at.strftime("%d %b %Y") }}</td>
-        <td><span class="status s-{{ a.status|lower }}">{{ a.status }}</span></td></tr>{% endfor %}</tbody>
-    </table></div>
-    {% else %}<div class="empty"><h2>No applications yet</h2><p class="muted">They'll appear here as people apply.</p></div>{% endif %}
+
+    <div class="nt-dashboard-stats" aria-label="Recruitment overview">
+      <a class="nt-dashboard-stat" href="/admin/jobs">
+        <div class="nt-dashboard-stat-top"><span>Active jobs</span><span class="nt-dashboard-stat-icon" aria-hidden="true">▣</span></div>
+        <strong class="nt-dashboard-stat-value">{{ stats.active_jobs }}</strong>
+        <span class="nt-dashboard-stat-action">Manage vacancies <span aria-hidden="true">↗</span></span>
+      </a>
+      <a class="nt-dashboard-stat" href="/admin/applications">
+        <div class="nt-dashboard-stat-top"><span>Total applications</span><span class="nt-dashboard-stat-icon" aria-hidden="true">▤</span></div>
+        <strong class="nt-dashboard-stat-value">{{ stats.total }}</strong>
+        <span class="nt-dashboard-stat-action">Review applicants <span aria-hidden="true">↗</span></span>
+      </a>
+      <a class="nt-dashboard-stat" href="/admin/applications?status=New">
+        <div class="nt-dashboard-stat-top"><span>New applications</span><span class="nt-dashboard-stat-icon" aria-hidden="true">◇</span></div>
+        <strong class="nt-dashboard-stat-value">{{ stats.new }}</strong>
+        <span class="nt-dashboard-stat-action">View new submissions <span aria-hidden="true">↗</span></span>
+      </a>
+    </div>
+
+    <div class="nt-dashboard-columns">
+      <section class="nt-dashboard-panel nt-dashboard-activity" aria-labelledby="recent-applications-title">
+        <div class="nt-dashboard-panel-heading">
+          <div>
+            <span class="nt-dashboard-eyebrow">Recruitment</span>
+            <h2 id="recent-applications-title">Recent applications</h2>
+          </div>
+          <a class="nt-dashboard-inline-link" href="/admin/applications">View all <span aria-hidden="true">↗</span></a>
+        </div>
+        {% if recent %}
+        <div class="nt-dashboard-table-wrap">
+          <table class="nt-dashboard-table">
+            <thead><tr><th scope="col">Applicant</th><th scope="col">Position</th><th scope="col">Received</th><th scope="col">Status</th></tr></thead>
+            <tbody>
+              {% for a in recent %}
+              <tr>
+                <td class="nt-dashboard-applicant">{{ a.full_name }}</td>
+                <td>{{ a.job_title }}</td>
+                <td>{{ a.created_at.strftime("%d %b %Y") }}</td>
+                <td><span class="status s-{{ a.status|lower }}">{{ a.status }}</span></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="nt-dashboard-empty">
+          <span class="nt-dashboard-empty-icon" aria-hidden="true">▤</span>
+          <h3>No applications yet</h3>
+          <p>New applications will appear here when candidates apply.</p>
+          <a class="nt-dashboard-inline-link" href="/admin/jobs">Manage job openings <span aria-hidden="true">↗</span></a>
+        </div>
+        {% endif %}
+      </section>
+
+      <section class="nt-dashboard-panel nt-dashboard-shortcuts" aria-labelledby="quick-actions-title">
+        <div class="nt-dashboard-panel-heading">
+          <div>
+            <span class="nt-dashboard-eyebrow">Management</span>
+            <h2 id="quick-actions-title">Quick actions</h2>
+          </div>
+        </div>
+        <div class="nt-dashboard-action-list">
+          <a href="/admin/jobs/new" class="nt-dashboard-action">
+            <span class="nt-dashboard-action-icon" aria-hidden="true">＋</span>
+            <span><strong>Create job</strong><small>Add a new vacancy</small></span>
+            <span class="nt-dashboard-action-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="/admin/licenses" class="nt-dashboard-action">
+            <span class="nt-dashboard-action-icon" aria-hidden="true">◇</span>
+            <span><strong>License requests</strong><small>Review product-key requests</small></span>
+            <span class="nt-dashboard-action-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="/admin/content" class="nt-dashboard-action">
+            <span class="nt-dashboard-action-icon" aria-hidden="true">▧</span>
+            <span><strong>Website content</strong><small>Manage pages and projects</small></span>
+            <span class="nt-dashboard-action-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="/admin/videos" class="nt-dashboard-action">
+            <span class="nt-dashboard-action-icon" aria-hidden="true">▷</span>
+            <span><strong>Videos</strong><small>Manage video showcases</small></span>
+            <span class="nt-dashboard-action-arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </section>
+    </div>
   </div>
 </section>
 {% endblock %}

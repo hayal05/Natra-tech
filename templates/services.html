@@ -1,12 +1,23 @@
 {% extends "base.html" %}
 {% block title %}Services — {{ company.name }}{% endblock %}
 {% block description %}Software development, AI and automation, digital experiences, and cloud infrastructure.{% endblock %}
+{% block head_extra %}<link rel="stylesheet" href="{{ url_for('static', filename='css/inner-pages.css', v='20261107a') }}">{% endblock %}
 {% block content %}
-<section class="section page-top">
+<section class="section page-top nt-inner-hero" aria-labelledby="services-title">
   <div class="container">
-    <span class="label">What we do</span>
-    <h1>Services<span class="accent">.</span></h1>
-    {% set full = true %}{% set services = content.services %}{% include "partials/services_list.html" %}
+    <div class="nt-inner-intro">
+      <span class="label">What we do</span>
+      <h1 id="services-title">Services<span class="accent">.</span></h1>
+      <p class="lead">Practical technology solutions designed around your business goals.</p>
+    </div>
+  </div>
+</section>
+<section class="section nt-inner-content nt-services-page" aria-label="Our services">
+  <div class="container">
+    <div class="nt-services-grid">
+      {% set full = true %}{% set services = content.services %}{% include "partials/services_list.html" %}
+    </div>
+    <div class="nt-services-end"><p>Have a specific challenge or project in mind?</p><a class="nt-inline-link" href="/contact">Discuss your project <span aria-hidden="true">↗</span></a></div>
   </div>
 </section>
 {% include "partials/cta.html" %}
