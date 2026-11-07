@@ -1,0 +1,50 @@
+/* Public navigation — Task 2. Existing palette and NATRA font are preserved. */
+.site-header { height: var(--nav-h); }
+.site-header .nav { max-width: 1440px; gap: clamp(1rem, 2vw, 2rem); }
+.site-header .logo { flex: 0 0 auto; position: relative; z-index: 2; }
+.site-header .nav-links {
+  display: flex; flex: 1; align-items: center; justify-content: flex-end;
+  gap: clamp(1rem, 2.5vw, 2.5rem); margin-left: auto;
+}
+.site-header .nav-primary, .site-header .nav-actions { display: flex; align-items: center; gap: clamp(.75rem, 1.35vw, 1.5rem); }
+.site-header .nav-link { font-size: .8rem; font-weight: 600; letter-spacing: .01em; white-space: nowrap; }
+.site-header .nav-link.is-active { color: var(--gold-bright); }
+.site-header .nav-link::after { height: 2px; border-radius: 2px; }
+.site-header .nav-actions { border-left: 1px solid var(--border); padding-left: clamp(.75rem, 1.5vw, 1.5rem); }
+.site-header .nav-actions .btn { flex-shrink: 0; min-height: 38px; padding: .65rem .95rem; font-size: .77rem; white-space: nowrap; }
+.site-header .nav-contact-btn { background: transparent; border-color: var(--gold); color: var(--gold-bright); gap: .45rem; }
+.site-header .nav-contact-btn:hover, .site-header .nav-contact-btn.is-active { background: var(--gold); color: var(--bg); }
+.site-header .nav-toggle { position: relative; z-index: 3; flex-shrink: 0; }
+/* Switch before the desktop controls become compressed. */
+@media (max-width: 1100px) {
+  .site-header .nav-toggle { display: block; margin-left: auto; }
+  .site-header .nav-links {
+    position: fixed; inset: var(--nav-h) 0 auto 0;
+    width: 100%; height: calc(100dvh - var(--nav-h)); max-height: calc(100dvh - var(--nav-h));
+    display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start;
+    gap: 1.5rem; margin: 0; padding: 1.6rem var(--pad) max(2rem, env(safe-area-inset-bottom));
+    background: rgba(8,9,13,.985); border-bottom: 1px solid var(--border);
+    overflow-y: auto; overscroll-behavior: contain; z-index: 2;
+    visibility: hidden; opacity: 0; transform: translateY(-12px);
+    transition: opacity .2s ease, transform .25s ease, visibility .25s;
+  }
+  .site-header .nav-links.is-open { visibility: visible; opacity: 1; transform: none; }
+  .site-header .nav-primary, .site-header .nav-actions { display: flex; flex-direction: column; align-items: stretch; gap: .3rem; width: 100%; }
+  .site-header .nav-primary .nav-link, .site-header .nav-actions .nav-link {
+    display: block; width: 100%; padding: .9rem .65rem;
+    font-size: 1.05rem; color: var(--text); border-radius: var(--radius-sm);
+  }
+  .site-header .nav-link::after { display: none; }
+  .site-header .nav-link.is-active { background: rgba(224,184,77,.085); color: var(--gold-bright); }
+  .site-header .nav-actions { border-left: 0; border-top: 1px solid var(--border); padding: 1rem 0 0; }
+  .site-header .nav-actions .btn { width: 100%; min-height: 44px; margin: .35rem 0 0; font-size: .88rem; }
+  .site-header .nav-actions .sms-portal-btn { align-self: stretch; }
+  body.nav-menu-open { overflow: hidden; }
+}
+@media (max-width: 480px) {
+  .site-header .logo { min-width: 0; }
+  .site-header .brand-wordmark { white-space: nowrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header .nav-links { transition: none; }
+}
