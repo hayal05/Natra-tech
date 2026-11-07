@@ -1,12 +1,24 @@
 {% extends "base.html" %}
 {% block title %}Projects — {{ company.name }}{% endblock %}
 {% block description %}A selection of software, AI and cloud projects we have delivered.{% endblock %}
+{% block head_extra %}<link rel="stylesheet" href="{{ url_for('static', filename='css/inner-pages.css', v='20261107a') }}">{% endblock %}
 {% block content %}
-<section class="section page-top">
+<section class="section page-top nt-inner-hero" aria-labelledby="projects-title">
   <div class="container">
-    <span class="label">Portfolio</span>
-    <h1>Our <span class="accent">work.</span></h1>
-    <div class="projects">{% set projects = content.projects %}{% include "partials/projects_list.html" %}</div>
+    <div class="nt-inner-intro">
+      <span class="label">Portfolio</span>
+      <h1 id="projects-title">Our <span class="accent">work.</span></h1>
+      <p class="lead">Explore the solutions, products and digital experiences we've built.</p>
+    </div>
+  </div>
+</section>
+<section class="section nt-inner-content nt-projects-page" aria-label="Featured projects">
+  <div class="container">
+    {% if content.projects %}
+    <div class="projects nt-projects-grid">{% set projects = content.projects %}{% include "partials/projects_list.html" %}</div>
+    {% else %}
+    <div class="nt-panel nt-empty">Our project showcase is being updated.</div>
+    {% endif %}
   </div>
 </section>
 {% include "partials/cta.html" %}
