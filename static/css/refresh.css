@@ -1,12 +1,6 @@
 /* Natra Tech visual refresh — additive, zero-dependency styling. */
 :root {
-  --gold: #e0b84d;
-  --gold-bright: #ffe39a;
-  --bg: #08090d;
-  --bg-2: #101117;
-  --card: #15171d;
-  --border: #292b32;
-  --muted: #a7aab5;
+  /* Layout override retained; color tokens now live in style.css. */
   --container: 1220px;
 }
 body {
