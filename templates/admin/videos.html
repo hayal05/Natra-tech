@@ -5,13 +5,14 @@
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="link-btn" type="submit">{{ label }}</button>
 </form>
 {% endmacro %}
+{% block head_extra %}{{ super() }}<link rel="stylesheet" href="{{ url_for('static', filename='css/admin-management.css', v='20261107a') }}">{% endblock %}
 {% block content %}
-<section class="section page-top">
+<section class="section page-top nt-management-page nt-videos-page">
   <div class="container">
-    <div class="admin-head"><h1>Videos</h1><a class="btn btn-solid" href="/admin/videos/new">Add video <span class="arrow">+</span></a></div>
-    <p class="muted">The video marked <b class="accent">On homepage</b> appears in the Watch section of the main page. Only one video can be shown at a time.</p>
+    <span class="label">Media management</span><div class="admin-head"><h1>Videos</h1><a class="btn btn-solid" href="/admin/videos/new">Add video <span class="arrow">+</span></a></div>
+    <p class="nt-management-subtitle">Manage your video library and select which video appears on the homepage.</p>
     {% if videos %}
-    <div class="table-wrap"><table class="table">
+    <div class="nt-management-table-title"><h2>Video library</h2><span>{{ videos|length }} video{{ "" if videos|length == 1 else "s" }}</span></div><div class="table-wrap"><table class="table">
       <thead><tr><th>Thumbnail</th><th>Title</th><th>Status</th><th>Actions</th></tr></thead>
       <tbody>{% for v in videos %}{% set thumb, thumb_fallback = video_thumb(v) %}
         <tr>
