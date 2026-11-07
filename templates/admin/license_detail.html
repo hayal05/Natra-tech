@@ -1,9 +1,10 @@
 {% extends "admin/layout.html" %}
 {% block title %}License Review #{{ item.id }} — Admin{% endblock %}
+{% block head_extra %}{{ super() }}<link rel="stylesheet" href="{{ url_for('static', filename='css/admin-management.css', v='20261107a') }}">{% endblock %}
 {% block content %}
-<section class="section page-top"><div class="container" style="max-width:900px">
+<section class="section page-top nt-management-page nt-license-detail-page"><div class="container" style="max-width:900px">
 <a href="{{ url_for('admin.license_requests') }}">← All license requests</a>
-<h1>Request <span class="accent">#{{ item.id }}</span></h1>
+<span class="label">License review</span><h1>Request <span class="accent">#{{ item.id }}</span></h1>
 {% if error %}<div class="flash" role="alert">{{ error }}</div>{% endif %}
 <div class="card nt-admin-review-card">
 <div class="nt-admin-details"><p><b>Customer:</b> {{ item.customer_name }} · {{ item.customer_email }}</p>
