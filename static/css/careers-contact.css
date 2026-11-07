@@ -1,0 +1,62 @@
+/* Careers, application, and contact page styling. Existing palette retained. */
+.nt-career-intro { max-width:830px; padding-bottom:clamp(2.75rem,6vw,5rem); }
+.nt-career-intro h1 { max-width:14ch; }
+.nt-list-heading { display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:1rem; padding-bottom:1.1rem; border-bottom:1px solid var(--border); }
+.nt-list-heading h2 { font-size:clamp(1.5rem,3vw,2.2rem); margin:0; }
+.nt-list-heading .muted { font-size:.86rem; }
+.nt-jobs-list { margin-top:0; display:grid; gap:1rem; padding-top:1.2rem; }
+.nt-job-card { border:1px solid var(--border); border-radius:var(--radius-lg); background:var(--card); padding:clamp(1.25rem,2.5vw,2rem); gap:1.5rem; align-items:flex-start; }
+.nt-job-card:last-child { border-bottom:1px solid var(--border); }
+.nt-job-card:hover { padding-left:clamp(1.25rem,2.5vw,2rem); border-color:rgba(224,184,77,.45); background:var(--bg-2); }
+.nt-job-card .job-main { min-width:0; }
+.nt-job-card .job-title-row { gap:.7rem; }
+.nt-job-card .job-title-row h2 { font-size:clamp(1.35rem,2.4vw,1.85rem); }
+.nt-job-card .job-meta { letter-spacing:0; line-height:1.55; }
+.nt-job-card .job-main > .muted { line-height:1.6; max-width:55ch; margin-top:.75rem; }
+.nt-job-actions { margin-top:.25rem; }
+.nt-job-actions .btn { white-space:nowrap; }
+.nt-role-shell { max-width:980px; }
+.nt-back-link { margin-bottom:2rem; }
+.nt-role-head { padding-bottom:1rem; border-bottom:1px solid var(--border); }
+.nt-role-head .job-title-row { align-items:flex-start; }
+.nt-role-head h1 { font-size:clamp(2.2rem,5vw,4.25rem); }
+.nt-role-head .job-meta { margin-top:1rem; letter-spacing:0; }
+.nt-role-body { max-width:780px; padding-top:1.4rem; }
+.nt-role-body h3 { font-size:1.3rem; color:var(--text); letter-spacing:0; margin-top:2.7rem; }
+.nt-role-body p { line-height:1.75; }
+.nt-role-body .checklist li { line-height:1.6; }
+.nt-role-page #apply { scroll-margin-top:calc(var(--nav-h) + 1.5rem); margin-top:3rem; }
+.nt-application-shell { max-width:780px; }
+.nt-apply-card { padding:clamp(1.4rem,4vw,2.8rem); border-radius:var(--radius-lg); }
+.nt-apply-card .label { margin-bottom:.65rem; }
+.nt-apply-card h2 { line-height:1.2; }
+.nt-form-help { margin-bottom:1.5rem; }
+.nt-apply-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.1rem; }
+.nt-form-field { min-width:0; }
+.nt-form-field label { margin-top:.75rem; }
+.nt-form-field input { width:100%; }
+.nt-apply-card .check { margin-top:1.6rem; }
+.nt-success-panel { max-width:760px; border:1px solid var(--border); border-radius:var(--radius-lg); background:var(--card); padding:clamp(2rem,5vw,4rem); }
+.nt-success-panel h1 { font-size:clamp(2.4rem,5vw,4rem); }
+.nt-success-panel .btn { margin-top:1rem; }
+.nt-contact-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.85fr); align-items:start; gap:clamp(2rem,7vw,7rem); }
+.nt-contact-intro h1 { max-width:12ch; }
+.nt-contact-intro .lead { max-width:32rem; }
+.nt-contact-intro .btn { margin-top:1.3rem; }
+.nt-contact-details { padding:clamp(1.6rem,3vw,2.6rem); border-radius:var(--radius-lg); }
+.nt-contact-details h3 { margin-bottom:.55rem; letter-spacing:.08em; }
+.nt-contact-details p { overflow-wrap:anywhere; line-height:1.55; margin-bottom:1.8rem; }
+.nt-contact-details p:last-child { margin-bottom:0; }
+.nt-contact-details .socials { gap:.65rem 1.2rem; }
+.nt-contact-details a:hover { color:var(--gold-bright); }
+@media(max-width:860px) {
+  .nt-contact-grid { grid-template-columns:1fr; }
+  .nt-contact-intro h1 { max-width:none; }
+}
+@media(max-width:600px) {
+  .nt-job-card { flex-direction:column; }
+  .nt-job-actions { width:100%; }
+  .nt-job-actions .btn { width:100%; justify-content:center; }
+  .nt-apply-fields { grid-template-columns:1fr; gap:.4rem; }
+  .nt-apply-card { padding:1.25rem; }
+}
