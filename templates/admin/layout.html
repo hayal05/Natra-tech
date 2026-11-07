@@ -1,23 +1,43 @@
 {% extends "base.html" %}
 {% block robots %}<meta name="robots" content="noindex, nofollow">{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin-shell.css', v='20261107a') }}">
+<script src="{{ url_for('static', filename='js/admin-navigation.js', v='20261107a') }}" defer></script>
+{% endblock %}
 {% block header %}
-<header class="admin-bar">
-  <div class="container admin-bar-inner">
-    <a class="logo" href="/admin/dashboard"><span>◆</span>{{ company.name }} <small class="muted">Admin</small></a>
-    <nav class="admin-nav" aria-label="Admin">
-      <a href="/admin/dashboard" class="nav-link{{ ' is-active' if request.path == '/admin/dashboard' }}">Dashboard</a>
-      <a href="/admin/applications" class="nav-link{{ ' is-active' if request.path.startswith('/admin/applications') }}">Applications</a>
-      <a href="/admin/jobs" class="nav-link{{ ' is-active' if request.path.startswith('/admin/jobs') }}">Jobs</a>
-      <a href="/admin/content" class="nav-link{{ ' is-active' if request.path == '/admin/content' }}">Website Content</a>
-      <a href="/admin/licenses" class="nav-link{{ ' is-active' if request.path.startswith('/admin/licenses') }}">Licenses</a>
-      <a href="/admin/videos" class="nav-link{{ ' is-active' if request.path.startswith('/admin/videos') }}">Videos</a>
+<div class="nt-admin-shell">
+  <aside class="nt-admin-sidebar" id="nt-admin-sidebar" aria-label="Admin sidebar">
+    <div class="nt-admin-brand">
+      <a class="nt-admin-brand-link" href="/admin/dashboard"><span class="nt-admin-brand-mark" aria-hidden="true">◆</span><span class="nt-admin-brand-name">{{ company.name }}<small>Admin workspace</small></span></a>
+      <button type="button" class="nt-admin-close" data-admin-close aria-label="Close navigation">×</button>
+    </div>
+    <nav class="nt-admin-nav" aria-label="Administration">
+      <span class="nt-admin-nav-heading">Workspace</span>
+      <a href="/admin/dashboard" class="nt-admin-nav-link{{ ' is-active' if request.path == '/admin/dashboard' }}" {% if request.path == '/admin/dashboard' %}aria-current="page"{% endif %}><span class="nt-admin-nav-symbol" aria-hidden="true">▦</span>Dashboard</a>
+      <a href="/admin/applications" class="nt-admin-nav-link{{ ' is-active' if request.path.startswith('/admin/applications') }}" {% if request.path.startswith('/admin/applications') %}aria-current="page"{% endif %}><span class="nt-admin-nav-symbol" aria-hidden="true">▤</span>Applications</a>
+      <a href="/admin/jobs" class="nt-admin-nav-link{{ ' is-active' if request.path.startswith('/admin/jobs') }}" {% if request.path.startswith('/admin/jobs') %}aria-current="page"{% endif %}><span class="nt-admin-nav-symbol" aria-hidden="true">▣</span>Jobs</a>
+      <span class="nt-admin-nav-heading nt-admin-nav-heading-spaced">Management</span>
+      <a href="/admin/content" class="nt-admin-nav-link{{ ' is-active' if request.path.startswith('/admin/content') }}" {% if request.path.startswith('/admin/content') %}aria-current="page"{% endif %}><span class="nt-admin-nav-symbol" aria-hidden="true">▧</span>Website Content</a>
+      <a href="/admin/licenses" class="nt-admin-nav-link{{ ' is-active' if request.path.startswith('/admin/licenses') }}" {% if request.path.startswith('/admin/licenses') %}aria-current="page"{% endif %}><span class="nt-admin-nav-symbol" aria-hidden="true">◇</span>Licenses</a>
+      <a href="/admin/videos" class="nt-admin-nav-link{{ ' is-active' if request.path.startswith('/admin/videos') }}" {% if request.path.startswith('/admin/videos') %}aria-current="page"{% endif %}><span class="nt-admin-nav-symbol" aria-hidden="true">▷</span>Videos</a>
+    </nav>
+    <div class="nt-admin-sidebar-footer">
+      <a href="/" class="nt-admin-nav-link" target="_blank" rel="noopener"><span class="nt-admin-nav-symbol" aria-hidden="true">↗</span>View website</a>
       <form method="post" action="/admin/logout">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        <button class="btn btn-sm" type="submit">Log out</button>
+        <button type="submit" class="nt-admin-nav-link nt-admin-logout"><span class="nt-admin-nav-symbol" aria-hidden="true">⇥</span>Log out</button>
       </form>
-    </nav>
-  </div>
-</header>
-{% for message in get_flashed_messages() %}<div class="container flash" role="status">{{ message }}</div>{% endfor %}
+    </div>
+  </aside>
+  <button class="nt-admin-backdrop" type="button" data-admin-close aria-label="Close admin navigation" tabindex="-1"></button>
+  <header class="nt-admin-topbar">
+    <button type="button" class="nt-admin-menu-trigger" data-admin-toggle aria-label="Open admin navigation" aria-expanded="false" aria-controls="nt-admin-sidebar">
+      <span aria-hidden="true">☰</span>
+    </button>
+    <div class="nt-admin-topbar-title"><span class="nt-admin-topbar-kicker">NATRA TECHNOLOGY</span><span>Admin workspace</span></div>
+    <div class="nt-admin-topbar-right"><span class="nt-admin-avatar" aria-hidden="true">◆</span><span class="nt-admin-user">{{ session.admin_name }}</span></div>
+  </header>
+</div>
+{% for message in get_flashed_messages() %}<div class="container flash nt-admin-flash" role="status">{{ message }}</div>{% endfor %}
 {% endblock %}
 {% block footer %}{% endblock %}
