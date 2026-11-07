@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Application received — {{ company.name }}{% endblock %}
 {% block robots %}<meta name="robots" content="noindex">{% endblock %}
+{% block head_extra %}<link rel="stylesheet" href="{{ url_for('static', filename='css/careers-contact.css', v='20261107a') }}">{% endblock %}
 {% block content %}
-<section class="section page-top">
-  <div class="container job-detail center-text">
+<section class="section page-top nt-application-page">
+  <div class="container job-detail center-text nt-success-panel">
     <span class="label">{{ job.title }}</span>
     <h1>Application <span class="accent">received</span></h1>
     <p class="lead">Thank you for applying. Our team will contact you if your application moves forward.</p>
