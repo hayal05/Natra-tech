@@ -1,0 +1,72 @@
+/* Shared administration components — Task 8. Existing business rules untouched. */
+body:has(.nt-admin-shell) main { --nt-control-radius:10px; }
+body:has(.nt-admin-shell) .admin-head { margin-bottom:1.5rem; }
+body:has(.nt-admin-shell) .admin-head h1,
+body:has(.nt-admin-shell) main > .section h1 { letter-spacing:-.04em; }
+body:has(.nt-admin-shell) .table-wrap {
+  width:100%; max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  border:1px solid var(--border); border-radius:var(--radius-lg);
+  background:var(--card);
+}
+body:has(.nt-admin-shell) .table {
+  min-width:660px; width:100%; border-collapse:collapse;
+  font-size:.85rem; line-height:1.5;
+}
+body:has(.nt-admin-shell) .table th {
+  padding:.85rem 1rem; background:rgba(255,255,255,.025);
+  color:var(--muted); font-weight:700; font-size:.72rem; letter-spacing:.045em;
+  white-space:nowrap; text-transform:none;
+}
+body:has(.nt-admin-shell) .table td { padding:.95rem 1rem; overflow-wrap:anywhere; }
+body:has(.nt-admin-shell) .table tbody tr:hover { background:rgba(224,184,77,.04); }
+body:has(.nt-admin-shell) .table td a:not(.btn):hover { color:var(--gold-bright); }
+body:has(.nt-admin-shell) .table td code { display:inline-block; max-width:250px; overflow-wrap:anywhere; font-size:.78rem; }
+body:has(.nt-admin-shell) .table .actions { display:flex; align-items:center; flex-wrap:wrap; gap:.45rem .85rem; min-width:165px; }
+body:has(.nt-admin-shell) .table .actions a,
+body:has(.nt-admin-shell) .table .actions .link-btn { font-size:.8rem; font-weight:600; }
+body:has(.nt-admin-shell) .table .actions form { margin:0; }
+body:has(.nt-admin-shell) .filters {
+  display:flex; align-items:end; flex-wrap:wrap; gap:1rem;
+  padding:1.2rem; background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius-lg); margin-bottom:1.4rem;
+}
+body:has(.nt-admin-shell) .filters > div { flex:1 1 155px; min-width:0; }
+body:has(.nt-admin-shell) .filters label { display:block; margin:0 0 .45rem; font-size:.78rem; letter-spacing:0; }
+body:has(.nt-admin-shell) :is(input:not([type="checkbox"]):not([type="hidden"]),select,textarea) {
+  max-width:100%; border-radius:var(--nt-control-radius); background:var(--bg-2);
+  border:1px solid var(--border); font-size:.9rem; color:var(--text);
+}
+body:has(.nt-admin-shell) :is(input,textarea,select):focus-visible { outline:2px solid var(--gold); outline-offset:1px; }
+body:has(.nt-admin-shell) :is(input,textarea,select)[aria-invalid="true"] { border-color:var(--danger); }
+body:has(.nt-admin-shell) input[type="checkbox"] { accent-color:var(--gold); }
+body:has(.nt-admin-shell) .card:not(.stat) { border-radius:var(--radius-lg); }
+body:has(.nt-admin-shell) .form-actions {
+  margin-top:1.6rem; padding-top:1.25rem; border-top:1px solid var(--border);
+  display:flex; gap:.75rem; flex-wrap:wrap;
+}
+body:has(.nt-admin-shell) .form-actions .btn { min-height:42px; }
+body:has(.nt-admin-shell) .empty { border:1px dashed var(--border); border-radius:var(--radius-lg); padding:2.5rem 1.5rem; }
+body:has(.nt-admin-shell) .empty h2 { font-size:1.25rem; }
+body:has(.nt-admin-shell) .pager { margin-top:1.3rem; gap:.75rem; flex-wrap:wrap; }
+body:has(.nt-admin-shell) .status { display:inline-flex; align-items:center; line-height:1.4; white-space:nowrap; font-size:.73rem; letter-spacing:.015em; font-weight:650; }
+.nt-admin-tabs { display:flex; gap:.4rem; flex-wrap:wrap; padding:.3rem; margin:1rem 0 1.3rem; width:fit-content; max-width:100%; border:1px solid var(--border); border-radius:var(--radius-md); background:var(--card); }
+.nt-admin-tabs a { display:inline-flex; align-items:center; min-height:36px; padding:.5rem .9rem; border-radius:var(--radius-sm); color:var(--muted); font-weight:600; font-size:.82rem; }
+.nt-admin-tabs a:hover { color:var(--text); background:rgba(255,255,255,.035); }
+.nt-admin-tabs a[aria-current="page"] { color:var(--gold-bright); background:rgba(224,184,77,.1); }
+.nt-admin-form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 1rem; }
+.nt-admin-form-grid > * { min-width:0; }
+.nt-admin-form-card { max-width:960px; }
+.nt-admin-review-card h2 { margin-top:1.8rem; font-size:1.3rem; }
+.nt-admin-review-image { display:block; max-width:100%; max-height:620px; width:auto; height:auto; object-fit:contain; border:1px solid var(--border); border-radius:var(--radius-sm); margin:.8rem 0 1.4rem; }
+.nt-admin-review-actions { display:flex; gap:.7rem; flex-wrap:wrap; margin-top:1.2rem; }
+.nt-admin-details { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.75rem 1.5rem; margin-bottom:1.25rem; }
+.nt-admin-details p { margin:0; overflow-wrap:anywhere; }
+.nt-admin-details b { display:block; font-size:.73rem; color:var(--muted); margin-bottom:.25rem; }
+@media(max-width:720px) {
+  .nt-admin-form-grid,.nt-admin-details { grid-template-columns:1fr; }
+  body:has(.nt-admin-shell) .filters { padding:1rem; }
+  body:has(.nt-admin-shell) .filters > div { flex:1 1 100%; }
+  body:has(.nt-admin-shell) .filters button { width:100%; justify-content:center; }
+  .nt-admin-tabs { width:100%; }
+  .nt-admin-tabs a { flex:1; justify-content:center; }
+}
