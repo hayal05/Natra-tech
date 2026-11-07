@@ -1,0 +1,35 @@
+/* Admin content, video and licensing management — Task 9 */
+.nt-management-page { padding-bottom:clamp(2rem,5vw,4rem); }
+.nt-management-page .admin-head { align-items:center; }
+.nt-management-page h1 { font-size:clamp(2rem,4vw,3rem); margin:0; }
+.nt-management-subtitle { color:var(--muted); font-size:.92rem; line-height:1.65; max-width:64ch; margin:.5rem 0 1.5rem; }
+.nt-editor-jump { display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; padding:.75rem; margin:0 0 1.5rem; border:1px solid var(--border); border-radius:var(--radius-lg); background:var(--card); }
+.nt-editor-jump a { display:inline-flex; align-items:center; min-height:37px; padding:.45rem .75rem; border:1px solid transparent; border-radius:var(--radius-sm); color:var(--muted); font-size:.82rem; font-weight:600; }
+.nt-editor-jump a:hover,.nt-editor-jump a:focus-visible { border-color:rgba(224,184,77,.28); background:rgba(224,184,77,.085); color:var(--gold-bright); }
+.nt-editor-card { scroll-margin-top:calc(var(--admin-topbar-height) + 1.25rem); }
+.nt-editor-card-heading { margin-bottom:1.2rem; border-bottom:1px solid var(--border); padding-bottom:1rem; }
+.nt-editor-card-heading h2 { font-size:clamp(1.2rem,2vw,1.7rem); margin:.3rem 0; }
+.nt-editor-card-heading p { margin:0; color:var(--muted); font-size:.82rem; }
+.nt-editor-step { display:inline-block; color:var(--gold); font-weight:700; font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; }
+.nt-editor-page .content-editor-grid { grid-template-columns:repeat(2,minmax(0,1fr)); align-items:start; }
+.nt-editor-page #editor-cta { grid-column:1/-1; }
+.nt-editor-page .content-entry { border-radius:var(--radius-md); }
+.nt-editor-page .content-entry-header { padding-bottom:.5rem; margin-bottom:.5rem; border-bottom:1px solid var(--border); }
+.nt-editor-page .content-entry-header strong { font-size:.86rem; }
+.nt-editor-page .content-save-bar { border-color:rgba(224,184,77,.35); box-shadow:0 -8px 35px rgba(0,0,0,.25); }
+.nt-management-table-title { display:flex; justify-content:space-between; align-items:baseline; gap:1rem; margin:1.6rem 0 .8rem; }
+.nt-management-table-title h2 { font-size:1.1rem; margin:0; }
+.nt-management-table-title span { color:var(--muted); font-size:.78rem; }
+.nt-management-page .table td code { overflow-wrap:anywhere; }
+.nt-license-detail-page .nt-admin-review-card { margin-top:1.4rem; }
+.nt-license-detail-page .nt-admin-review-actions { padding-top:1rem; border-top:1px solid var(--border); }
+@media(max-width:860px) {
+  .nt-editor-page .content-editor-grid { grid-template-columns:1fr; }
+  .nt-editor-page #editor-cta { grid-column:auto; }
+}
+@media(max-width:520px) {
+  .nt-editor-jump { flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .nt-editor-jump a { white-space:nowrap; flex-shrink:0; }
+  .nt-editor-page .content-save-bar { padding:.75rem; }
+  .nt-management-page .admin-head { align-items:flex-start; }
+}
