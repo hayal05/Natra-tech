@@ -1,0 +1,41 @@
+/* NATRA reusable UI primitives.
+   Opt-in classes: existing screens remain unchanged until individually migrated. */
+.nt-stack { display: flex; flex-direction: column; gap: var(--space-4); min-width: 0; }
+.nt-row { display: flex; align-items: center; gap: var(--space-4); min-width: 0; }
+.nt-row--between { justify-content: space-between; }
+.nt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: var(--space-6); }
+.nt-panel {
+  min-width: 0;
+  padding: var(--space-6);
+  color: var(--text-primary);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+}
+.nt-panel__title { margin: 0 0 var(--space-4); font-size: 1.125rem; font-weight: 700; line-height: 1.35; }
+.nt-page-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; margin-bottom: var(--space-6); }
+.nt-page-heading h1 { margin: 0; font-size: clamp(1.65rem, 3vw, 2.4rem); line-height: 1.2; }
+.nt-help-text { color: var(--text-secondary); font-size: .875rem; line-height: 1.5; }
+.nt-actions { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-2); }
+.nt-btn {
+  display: inline-flex; justify-content: center; align-items: center; gap: var(--space-2);
+  min-height: 42px; padding: .65rem 1rem; border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm); background: var(--surface-raised);
+  color: var(--text-primary); font: 600 .875rem/1.2 var(--font);
+  cursor: pointer; text-decoration: none; transition: background .2s, border-color .2s;
+}
+.nt-btn:hover { border-color: var(--accent-primary); }
+.nt-btn--primary { background: var(--accent-primary); color: #08090d; border-color: var(--accent-primary); }
+.nt-btn--primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.nt-btn:focus-visible { outline: 2px solid var(--accent-hover); outline-offset: 2px; }
+.nt-field { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.nt-field label { display: block; margin: 0; color: var(--text-secondary); font-size: .875rem; letter-spacing: 0; }
+.nt-field :is(input, select, textarea) { width: 100%; max-width: 100%; }
+.nt-table-scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.nt-empty { text-align: center; color: var(--text-secondary); padding: 2.5rem var(--space-6); }
+@media (max-width: 640px) {
+  .nt-panel { padding: var(--space-4); }
+  .nt-page-heading { align-items: stretch; }
+  .nt-page-heading .nt-actions { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .nt-btn { transition: none; } }
