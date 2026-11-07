@@ -1,0 +1,58 @@
+/* Inner pages — About, Services, Projects. All colors use existing NATRA tokens. */
+.nt-inner-hero { padding-bottom: clamp(2.5rem,5vw,4rem); }
+.nt-inner-hero h1 { max-width: 13ch; margin: .18em 0 .35em; font-size:clamp(3.1rem,7vw,6.2rem); }
+.nt-inner-intro { max-width: 840px; }
+.nt-inner-intro .lead { max-width: 42rem; margin: 0; }
+.nt-inner-content { padding-top: 0; }
+.nt-inner-section-heading { margin-bottom: 2rem; }
+.nt-inner-section-heading .label { margin-bottom: .7rem; }
+.nt-inner-section-heading h2 { margin: 0; }
+.nt-inner-action { margin-top: 1.5rem; }
+.nt-about-hero-grid { display:grid; grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr); align-items:center; gap:clamp(2rem,5vw,5rem); }
+.nt-about-hero-grid:has(> div:only-child) { grid-template-columns: 1fr; }
+.nt-about-hero-grid .lead { max-width: 38rem; }
+.nt-about-hero-media { border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; background:var(--card); }
+.nt-about-hero-media img { width:100%; height:auto; aspect-ratio:5/4; object-fit:cover; }
+.nt-about-stats .strip-inner { grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:0; }
+.nt-about-stats .strip-inner > div { padding:1.4rem 1.6rem; }
+.nt-about-stats .strip-inner span { display:block; margin-top:.3rem; font-size:.85rem; }
+.nt-about-purpose { padding-bottom:clamp(3rem,6vw,5rem); }
+.nt-about-purpose-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+.nt-purpose-card, .nt-value-card { min-width:0; padding:clamp(1.5rem,3vw,2.5rem); border:1px solid var(--border); background:var(--card); border-radius:var(--radius-lg); }
+.nt-purpose-index { display:block; color:var(--gold); font-size:.8rem; font-weight:600; letter-spacing:.06em; margin-bottom:2rem; }
+.nt-purpose-card h3 { font-size:clamp(1.6rem,3vw,2.3rem); letter-spacing:-.025em; }
+.nt-purpose-card p, .nt-value-card p { max-width:48ch; line-height:1.75; margin-bottom:0; }
+.nt-about-values { background:var(--bg-2); padding-top:clamp(3rem,6vw,5rem); }
+.nt-value-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:1rem; }
+.nt-value-card h3 { font-size:clamp(1.2rem,2vw,1.55rem); letter-spacing:-.02em; }
+.nt-value-card .nt-purpose-index { margin-bottom:1.5rem; }
+.nt-value-card .gold-line { margin-top:1.5rem; }
+.nt-services-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+.nt-services-grid .service { min-width:0; display:flex; gap:1.3rem; align-items:flex-start; padding:clamp(1.5rem,3vw,2.4rem); background:var(--card); border:1px solid var(--border); border-radius:var(--radius-lg); }
+.nt-services-grid .service:hover { padding-left:clamp(1.5rem,3vw,2.4rem); background:var(--bg-2); }
+.nt-services-grid .service-num { flex-shrink:0; color:var(--gold); font-size:1rem; }
+.nt-services-grid .service h3 { font-size:clamp(1.3rem,2.3vw,2rem); line-height:1.22; }
+.nt-services-grid .service-detail { font-size:.92rem; line-height:1.75; }
+.nt-services-grid .service-tag { margin-bottom:.7rem; }
+.nt-services-end { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-top:2rem; padding:1.5rem 0; border-top:1px solid var(--border); }
+.nt-services-end p { margin:0; color:var(--muted); }
+.nt-inline-link { color:var(--gold-bright); font-weight:600; }
+.nt-inline-link:hover { text-decoration:underline; text-underline-offset:4px; }
+.nt-projects-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(1.5rem,3vw,2.5rem); margin-top:0; }
+.nt-projects-grid .project { min-width:0; }
+.nt-projects-grid .project-img { aspect-ratio:16/10; }
+.nt-projects-grid .project-meta { flex-wrap:wrap; gap:.65rem; }
+.nt-projects-grid .project-meta h3 { font-size:clamp(1.15rem,2vw,1.55rem); }
+.nt-projects-grid .project-meta p { font-size:.85rem; line-height:1.5; }
+.nt-projects-grid .project-num { margin-left:auto; white-space:nowrap; }
+@media(max-width:860px) {
+  .nt-about-hero-grid, .nt-about-purpose-grid, .nt-services-grid, .nt-projects-grid { grid-template-columns:1fr; }
+  .nt-inner-hero h1 { font-size:clamp(2.8rem,10vw,4.8rem); }
+}
+@media(max-width:520px) {
+  .nt-about-stats .strip-inner { grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); }
+  .nt-about-stats .strip-inner > div { padding:1rem .85rem; }
+  .nt-services-grid .service { padding:1.25rem; gap:.9rem; }
+  .nt-services-grid .service:hover { padding-left:1.25rem; }
+  .nt-projects-grid .project-meta { align-items:flex-start; }
+}
