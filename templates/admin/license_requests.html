@@ -1,16 +1,17 @@
 {% extends "admin/layout.html" %}
 {% block title %}License Requests — Admin{% endblock %}
+{% block head_extra %}{{ super() }}<link rel="stylesheet" href="{{ url_for('static', filename='css/admin-management.css', v='20261107a') }}">{% endblock %}
 {% block content %}
-<section class="section page-top"><div class="container">
+<section class="section page-top nt-management-page nt-licenses-page"><div class="container">
 <span class="label">Licensing</span><h1>Product key <span class="accent">approvals.</span></h1>
-<p class="lead">Review payment screenshots and hardware IDs before issuing a device-bound license.</p>
+<p class="nt-management-subtitle">Review license requests and independently verify payments before issuing keys.</p>
 {% set current_status = request.args.get('status', 'pending') %}
 <nav class="nt-admin-tabs" aria-label="License request status">
 <a href="?status=pending"{% if current_status == 'pending' %} aria-current="page"{% endif %}>Pending</a>
 <a href="?status=approved"{% if current_status == 'approved' %} aria-current="page"{% endif %}>Approved</a>
 <a href="?status=rejected"{% if current_status == 'rejected' %} aria-current="page"{% endif %}>Rejected</a>
 </nav>
-<div class="table-wrap"><table class="table"><thead><tr><th>ID</th><th>Customer</th><th>Product</th><th>Hardware ID</th><th>Submitted</th><th>Status</th></tr></thead>
+<div class="nt-management-table-title"><h2>License requests</h2><span>{{ rows|length }} shown</span></div><div class="table-wrap"><table class="table"><thead><tr><th>ID</th><th>Customer</th><th>Product</th><th>Hardware ID</th><th>Submitted</th><th>Status</th></tr></thead>
 <tbody>{% for r in rows %}
 <tr><td><a href="{{ url_for('admin.license_detail', request_id=r.id) }}">#{{ r.id }}</a></td>
 <td>{{ r.customer_name }}<p class="muted">{{ r.customer_email }}</p></td><td>{{ r.product_code }}</td><td><code>{{ r.hardware_id }}</code></td><td>{{ r.created_at.strftime('%d %b %Y') }}</td><td>{{ r.status }}</td></tr>
